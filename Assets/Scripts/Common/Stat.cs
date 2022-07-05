@@ -1,3 +1,9 @@
+public enum UnitCode
+{
+    player,
+    woodBlock
+}
+
 public class Stat
 {
     // 멤버 프로퍼티

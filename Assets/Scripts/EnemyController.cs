@@ -18,7 +18,7 @@ public class EnemyController : MonoBehaviour
         movePoint = new Vector3(transform.position.x, transform.position.y);
         detector = transform.GetChild(0).GetComponent<Detector>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        //ÃÖÃÊ ¸ñÀûÁö¸¦ ÀÚ½ÅÀÇ À§Ä¡·Î ¼³Á¤
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
     void Update()
@@ -26,8 +26,8 @@ public class EnemyController : MonoBehaviour
         float moveX = backMap.transform.localScale.x / 2;
         float moveY = backMap.transform.localScale.y / 2;
 
-        // ÇÃ·¹ÀÌ¾î °¨Áö½Ã ÇÃ·¹ÀÌ¾î¸¦ ÂÑ¾Æ°¨
-        if (detector._isDetected)
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½Ñ¾Æ°ï¿½
+        if (detector.IsDetected)
         {
             movePoint = player.transform.position;
             MoveToPos(movePoint);
@@ -35,7 +35,7 @@ public class EnemyController : MonoBehaviour
 
         else
         {
-            // ÁÂÇ¥ ÀÌµ¿, ¸ñÀûÁö µµÂø ½Ã »õ·Î¿î ¸ñÀûÁö ·£´ýÀ¸·Î »ý¼º  
+            // ï¿½ï¿½Ç¥ ï¿½Ìµï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½  
             if (Vector3.Distance(transform.position, movePoint) > 0.1f)
                 MoveToPos(movePoint);
             else

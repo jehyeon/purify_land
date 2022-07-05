@@ -5,9 +5,9 @@ using UnityEngine;
 public class Detector : MonoBehaviour
 {
     Vector3 playerPos;
-    bool isDetected = false;
+    private bool isDetected = false;
 
-    public bool _isDetected
+    public bool IsDetected
     {
         get { return isDetected; }
     }
@@ -17,7 +17,7 @@ public class Detector : MonoBehaviour
         if (other.transform.CompareTag("Player"))
         {
             isDetected = true;
-            Debug.Log("ÇÃ·¹ÀÌ¾î °¨ÁöµÊ.");
+            Debug.Log("ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.");
         }
     }
 }

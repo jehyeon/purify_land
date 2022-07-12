@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2Z6qnLdQJSUxKNFwsNbERd3Hj0UrBmuDp9zIAcQd4iIEso26iUmAjQR/OFvM65Xx67rKnpGrK7TgdWoKFa8thA==",
+  "dgSpecHash": "C0qdWsVyVVBxFe3mmObMOpMsHYQ8bDCyT4H3fqOW+3OjXhWQgFnMhO0lNmgIz8X1cOLTHFO5jtVplLHl+h/bdw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ciopi\\source\\repos\\server\\server\\Server.csproj",
+  "projectFilePath": "D:\\dev\\purify_land\\Server\\server\\Server.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

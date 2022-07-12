@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ciopi\\source\\repos\\server\\DummyClient\\DummyClient.csproj": {}
+    "D:\\dev\\purify_land\\Server\\DummyClient\\DummyClient.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ciopi\\source\\repos\\server\\DummyClient\\DummyClient.csproj": {
+    "D:\\dev\\purify_land\\Server\\DummyClient\\DummyClient.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ciopi\\source\\repos\\server\\DummyClient\\DummyClient.csproj",
+        "projectUniqueName": "D:\\dev\\purify_land\\Server\\DummyClient\\DummyClient.csproj",
         "projectName": "DummyClient",
-        "projectPath": "C:\\Users\\ciopi\\source\\repos\\server\\DummyClient\\DummyClient.csproj",
+        "projectPath": "D:\\dev\\purify_land\\Server\\DummyClient\\DummyClient.csproj",
         "packagesPath": "C:\\Users\\ciopi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ciopi\\source\\repos\\server\\DummyClient\\obj\\",
+        "outputPath": "D:\\dev\\purify_land\\Server\\DummyClient\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,8 +32,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\ciopi\\source\\repos\\server\\ServerCore\\ServerCore.csproj": {
-                "projectPath": "C:\\Users\\ciopi\\source\\repos\\server\\ServerCore\\ServerCore.csproj"
+              "D:\\dev\\purify_land\\Server\\ServerCore\\ServerCore.csproj": {
+                "projectPath": "D:\\dev\\purify_land\\Server\\ServerCore\\ServerCore.csproj"
               }
             }
           }
@@ -66,14 +66,14 @@
         }
       }
     },
-    "C:\\Users\\ciopi\\source\\repos\\server\\ServerCore\\ServerCore.csproj": {
+    "D:\\dev\\purify_land\\Server\\ServerCore\\ServerCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ciopi\\source\\repos\\server\\ServerCore\\ServerCore.csproj",
+        "projectUniqueName": "D:\\dev\\purify_land\\Server\\ServerCore\\ServerCore.csproj",
         "projectName": "ServerCore",
-        "projectPath": "C:\\Users\\ciopi\\source\\repos\\server\\ServerCore\\ServerCore.csproj",
+        "projectPath": "D:\\dev\\purify_land\\Server\\ServerCore\\ServerCore.csproj",
         "packagesPath": "C:\\Users\\ciopi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ciopi\\source\\repos\\server\\ServerCore\\obj\\",
+        "outputPath": "D:\\dev\\purify_land\\Server\\ServerCore\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

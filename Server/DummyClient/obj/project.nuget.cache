@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5MbyyInue7KFUqGf3LIopeP1DaRmfkJF6TdlaI06cnYkTnXrXOv+1lUFzlSh3Jchb+EHu19OwfUn7d0HN0VYiQ==",
+  "dgSpecHash": "snrDKLyZzizCRIK5dvuWRnuDawBiB0p17GcBNG/nXIFjsVAdoaEMfhiT9iOCK25DD/p/XQy5EAeuWXnliBHW7Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ciopi\\source\\repos\\server\\DummyClient\\DummyClient.csproj",
+  "projectFilePath": "D:\\dev\\purify_land\\Server\\DummyClient\\DummyClient.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

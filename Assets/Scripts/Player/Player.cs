@@ -1,16 +1,18 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private InventoryUI inventory;
+    
     private Rigidbody2D rigid;
-    private float h;
-    private float v;
-    private bool isHorizonMove;
+    private float _h;
+    private float _v;
     public Stat stat;
     public UnitCode unitCode;
-    
+
     private float curTime;
     private float coolTime = 0.25f;
     public Vector2 boxSize; // 공격 판정 박스
@@ -27,37 +29,18 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        Move();
         Attack();
     }
 
     private void FixedUpdate()
     {
-        Vector2 moveVec = isHorizonMove 
-            ? new Vector2(h, 0) 
-            : new Vector2(0, v);
+        _h = Input.GetAxisRaw("Horizontal");
+        _v = Input.GetAxisRaw("Vertical");
+        Vector2 moveVec = new Vector2(_h, _v);
 
         rigid.velocity = moveVec * stat.speed;
-        if(h > 0) transform.Rotate(0,0,90);
-        if(h < 0) transform.Rotate(0, 0, -90);
-        if(v > 0) transform.Rotate(0, 0, 0);
-        if(v < 0) transform.Rotate(0, 0, 180);
     }
 
-    private void Move()
-    {
-        h = Input.GetAxisRaw("Horizontal");
-        v = Input.GetAxisRaw("Vertical");
-
-        bool hDown = Input.GetButtonDown("Horizontal");
-        bool vDown = Input.GetButtonDown("Vertical");
-        bool hUp = Input.GetButtonUp("Horizontal");
-        bool vUp = Input.GetButtonUp("Vertical");
-
-        if (hDown || vUp) isHorizonMove = true;
-        else if (vDown || hUp) isHorizonMove = false;
-    }
-    
     private void Attack()
     {
 
@@ -90,5 +73,16 @@ public class Player : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(pos.position, boxSize);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.tag.Equals("Item"))
+        {
+            // collider.gameObject.SetActive(false);
+            Debug.Log(collider.transform.GetComponent<ItemPickUp>().item.itemName + "획득");
+            inventory.AcquireItem(collider.transform.GetComponent<ItemPickUp>().item);
+            Destroy(collider.gameObject);
+        }
     }
 }

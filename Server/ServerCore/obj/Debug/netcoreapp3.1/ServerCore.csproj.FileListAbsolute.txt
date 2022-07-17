@@ -8,3 +8,13 @@ C:\Users\ciopi\source\repos\server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore
 C:\Users\ciopi\source\repos\server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.csproj.CoreCompileInputs.cache
 C:\Users\ciopi\source\repos\server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.dll
 C:\Users\ciopi\source\repos\server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.pdb
+D:\dev\purify_land\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.csproj.AssemblyReference.cache
+D:\dev\purify_land\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.GeneratedMSBuildEditorConfig.editorconfig
+D:\dev\purify_land\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.AssemblyInfoInputs.cache
+D:\dev\purify_land\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.AssemblyInfo.cs
+D:\dev\purify_land\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.csproj.CoreCompileInputs.cache
+D:\dev\purify_land\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.dll
+D:\dev\purify_land\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.pdb
+D:\dev\purify_land\Server\ServerCore\bin\Debug\netcoreapp3.1\ServerCore.deps.json
+D:\dev\purify_land\Server\ServerCore\bin\Debug\netcoreapp3.1\ServerCore.dll
+D:\dev\purify_land\Server\ServerCore\bin\Debug\netcoreapp3.1\ServerCore.pdb

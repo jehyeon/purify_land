@@ -69,12 +69,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(pos.position, boxSize);
-    }
-
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.gameObject.tag.Equals("Item"))

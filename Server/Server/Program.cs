@@ -1,59 +1,9 @@
 ﻿using System;
 using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using ServerCore;
 
 namespace Server
 {
-    class Packet
-    {
-        public ushort size;
-        public ushort packetId;
-    }
-
-    class GameSession : PacketSession
-    {
-        public override void OnConneteced(EndPoint endPoint)
-        {
-            Console.WriteLine($"OnConneteced : {endPoint}");
-
-            //Packet packet = new Packet() { size = 1000, packetId = 10 };
-
-            //ArraySegment<byte> openSegment = SendBufferHelper.Open(4069);
-            //byte[] buffer = BitConverter.GetBytes(packet.size);
-            //byte[] buffer2 = BitConverter.GetBytes(packet.packetId);
-            //Array.Copy(buffer, 0, openSegment.Array, openSegment.Offset, buffer.Length);
-            //Array.Copy(buffer2, 0, openSegment.Array, openSegment.Offset + buffer.Length, buffer2.Length);
-            //ArraySegment<byte> sendBuff = SendBufferHelper.Close(buffer.Length + buffer2.Length);
-
-            ////byte[] sendBuff = Encoding.UTF8.GetBytes("Welcome to MMORPG Server!");
-            //Send(sendBuff);
-            Thread.Sleep(5000);
-            Disconnect();
-        }
-
-        public override void OnRecvPacket(ArraySegment<byte> buffer)
-        {
-            ushort size = BitConverter.ToUInt16(buffer.Array, buffer.Offset);
-            ushort id = BitConverter.ToUInt16(buffer.Array, buffer.Offset + 2);
-
-            Console.WriteLine($"RecvPacketId: {id}, Size: {size}");
-        }
-
-        public override void OnDisconnected(EndPoint endPoint)
-        {
-            Console.WriteLine($"OnDisconnected : {endPoint}");
-        }
-
-        public override void OnSend(int numOfBytes)
-        {
-            Console.WriteLine($"Transferred bytes: {numOfBytes}");
-        }
-    }
-
     class Program
     {
         static Listener _listener = new Listener();
@@ -65,7 +15,7 @@ namespace Server
             IPAddress ipAddr = ipHost.AddressList[0];
             IPEndPoint endPoint = new IPEndPoint(ipAddr, 7777);
 
-            _listener.Init(endPoint, () => { return new GameSession(); });
+            _listener.Init(endPoint, () => { return new ClientSession(); });
             while (true)
             {
 

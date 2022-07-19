@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Detector : MonoBehaviour
 {
-    Vector3 playerPos;
     private bool isDetected = false;
 
     public bool IsDetected
@@ -17,7 +16,16 @@ public class Detector : MonoBehaviour
         if (other.transform.CompareTag("Player"))
         {
             isDetected = true;
-            Debug.Log("�÷��̾� ������.");
+            Debug.Log("감지됨.");
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.transform.CompareTag("Player"))
+        {
+            isDetected = false;
+            Debug.Log("시야를 벗어남.");
         }
     }
 }

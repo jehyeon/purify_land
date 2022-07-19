@@ -3,22 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyController : MonoBehaviour
+public class EnemyMovement : MonoBehaviour
 {
     PlayerController player;
     Transform backMap;
     Detector detector;
+    Spawner spawner;
 
-    float moveSpeed = 7;
+    private float[] speeds = { 7, 5, 5, 3 };
+    private float moveSpeed = 5;
+    Vector3 spawnPoint;
     Vector3 movePoint;
+    int index;
 
     void Awake()
     {
         backMap = GameObject.FindGameObjectWithTag("Floor").GetComponent<Transform>();
         movePoint = new Vector3(transform.position.x, transform.position.y);
-        detector = transform.GetChild(0).GetComponent<Detector>();
+        detector = GameObject.FindGameObjectWithTag("Detector").GetComponent<Detector>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        //���� �������� �ڽ��� ��ġ�� ����
+        spawnPoint = transform.position;
+    }
+
+    private void Start()
+    {
+        // 스포너의 생성 순서에 따라 속도를 변경.
+        spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>();
+        index = spawner.Idx - 1;
+        moveSpeed = speeds[index];
     }
 
     void Update()
@@ -26,7 +38,7 @@ public class EnemyController : MonoBehaviour
         float moveX = backMap.transform.localScale.x / 2;
         float moveY = backMap.transform.localScale.y / 2;
 
-        // �÷��̾� ������ �÷��̾ �Ѿư�
+        // 플레이어 감지 부분
         if (detector.IsDetected)
         {
             movePoint = player.transform.position;
@@ -35,11 +47,17 @@ public class EnemyController : MonoBehaviour
 
         else
         {
-            // ��ǥ �̵�, ������ ���� �� ���ο� ������ �������� ����  
             if (Vector3.Distance(transform.position, movePoint) > 0.1f)
                 MoveToPos(movePoint);
+            // 플레이어를 감지하지 못했을 경우, 다음 MovePoint로 이동.
             else
-                movePoint = new Vector3(Random.Range(-moveX, moveX), Random.Range(-moveY, moveY));
+            {
+                // 생성위치 주변에서 배회.
+                float maxMoveX = spawnPoint.x + 5;
+                float maxMoveY = spawnPoint.y + 3;
+                movePoint = new Vector3(Random.Range(-maxMoveX, maxMoveX), Random.Range(-maxMoveY, maxMoveY));
+                //movePoint = new Vector3(Random.Range(-moveX, moveX), Random.Range(-moveY, moveY));
+            }
         }
     }
 

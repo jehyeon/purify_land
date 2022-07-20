@@ -1,0 +1,13 @@
+D:\dev\purify_land\Server\PacketGenerator\bin\PacketGenerator.exe
+D:\dev\purify_land\Server\PacketGenerator\bin\PacketGenerator.deps.json
+D:\dev\purify_land\Server\PacketGenerator\bin\PacketGenerator.runtimeconfig.json
+D:\dev\purify_land\Server\PacketGenerator\bin\PacketGenerator.runtimeconfig.dev.json
+D:\dev\purify_land\Server\PacketGenerator\bin\PacketGenerator.dll
+D:\dev\purify_land\Server\PacketGenerator\bin\PacketGenerator.pdb
+D:\dev\purify_land\Server\PacketGenerator\obj\Debug\PacketGenerator.GeneratedMSBuildEditorConfig.editorconfig
+D:\dev\purify_land\Server\PacketGenerator\obj\Debug\PacketGenerator.AssemblyInfoInputs.cache
+D:\dev\purify_land\Server\PacketGenerator\obj\Debug\PacketGenerator.AssemblyInfo.cs
+D:\dev\purify_land\Server\PacketGenerator\obj\Debug\PacketGenerator.csproj.CoreCompileInputs.cache
+D:\dev\purify_land\Server\PacketGenerator\obj\Debug\PacketGenerator.dll
+D:\dev\purify_land\Server\PacketGenerator\obj\Debug\PacketGenerator.pdb
+D:\dev\purify_land\Server\PacketGenerator\obj\Debug\PacketGenerator.genruntimeconfig.cache

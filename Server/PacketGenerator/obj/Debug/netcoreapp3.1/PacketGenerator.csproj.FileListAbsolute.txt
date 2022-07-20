@@ -11,3 +11,4 @@ D:\dev\purify_land\Server\PacketGenerator\obj\Debug\netcoreapp3.1\PacketGenerato
 D:\dev\purify_land\Server\PacketGenerator\obj\Debug\netcoreapp3.1\PacketGenerator.dll
 D:\dev\purify_land\Server\PacketGenerator\obj\Debug\netcoreapp3.1\PacketGenerator.pdb
 D:\dev\purify_land\Server\PacketGenerator\obj\Debug\netcoreapp3.1\PacketGenerator.genruntimeconfig.cache
+D:\dev\purify_land\Server\PacketGenerator\obj\Debug\netcoreapp3.1\PacketGenerator.csproj.AssemblyReference.cache

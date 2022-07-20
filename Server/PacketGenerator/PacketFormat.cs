@@ -47,9 +47,6 @@ class {0}
         }}
     }}
 
-    public List<SkillInfo> skills = new List<SkillInfo>();
-
-
     public void Read(ArraySegment<byte> segment)
     {{
         ushort count = 0;
@@ -87,7 +84,33 @@ class {0}
         // {0} 변수 형식
         // {1} 변수 이름
         public static string memberFormat =
-@"public {0} {1}";
+@"public {0} {1};";
+
+        // {0} 리스트 이름 대문자
+        // {1} 리스트 이름 소문자
+        // {2} 멤벼 변수들
+        // {3} 멤버 변수 Read
+        // {4} 멤번 변수 Write
+        public static string memberListFormat =
+@"
+public struct {0}
+{{
+    {2}
+
+    public void Read(ReadOnlySpan<byte> s, ref ushort count)
+    {{
+        {3}
+    }}
+
+    public bool Write(Span<byte> s, ref ushort count)
+    {{
+        bool success = true;
+        {4}
+        return success;
+    }}
+}}
+
+public List<{0}> {1}s = new List<{0}>();";
 
         // {0} 변수 이름
         // {1} BitConverter.To~ 
@@ -103,6 +126,20 @@ count += sizeof(ushort);
 this.name = Encoding.Unicode.GetString(s.Slice(count, {0}Len));
 count += {0}Len;";
 
+        // {0} 리스트 이름 대문자
+        // {1} 리스트 이름 소문자
+        public static string readListFormat =
+@"{1}s.Clear();
+ushort {1}Len = BitConverter.ToUInt16(s.Slice(count, s.Length - count));
+count += sizeof(ushort);
+for (int i = 0; i < {1}Len; i++)
+{{
+    {0} skill = new {0}();
+    {1}.Read(s, ref count);
+    {1}s.Add({1});
+}}
+";
+
         // {0} 변수 이름
         // {1} 변수 형식
         public static string writeFormat =
@@ -115,5 +152,16 @@ count += sizeof({1});";
 success &= BitConverter.TryWriteBytes(s.Slice(count, s.Length - count), {0}Len);
 count += sizeof(ushort);
 count += {0}Len;";
+
+        // {0} 리스트 이름 대문자
+        // {1} 리스트 이름 소문자
+        public static string writeListFormat =
+@"success &= BitConverter.TryWriteBytes(s.Slice(count, s.Length - count), (ushort)this.{1}s.Count);
+count += sizeof(ushort);
+foreach ({0} {1} in this.{1}s)
+{{
+    success &= {1}.Write(s, ref count);
+}}
+";
     }
 }

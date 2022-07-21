@@ -11,3 +11,4 @@ D:\dev\purify_land\Server\PacketGenerator\obj\Debug\PacketGenerator.csproj.CoreC
 D:\dev\purify_land\Server\PacketGenerator\obj\Debug\PacketGenerator.dll
 D:\dev\purify_land\Server\PacketGenerator\obj\Debug\PacketGenerator.pdb
 D:\dev\purify_land\Server\PacketGenerator\obj\Debug\PacketGenerator.genruntimeconfig.cache
+D:\dev\purify_land\Server\PacketGenerator\obj\Debug\PacketGenerator.csproj.AssemblyReference.cache

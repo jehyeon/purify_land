@@ -73,7 +73,6 @@ public class Player : MonoBehaviour
     {
         if (collider.gameObject.tag.Equals("Item"))
         {
-            // collider.gameObject.SetActive(false);
             Debug.Log(collider.transform.GetComponent<ItemPickUp>().item.itemName + "획득");
             inventory.AcquireItem(collider.transform.GetComponent<ItemPickUp>().item);
             Destroy(collider.gameObject);

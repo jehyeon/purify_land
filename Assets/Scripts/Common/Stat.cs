@@ -1,7 +1,7 @@
 public enum UnitCode
 {
-    player,
-    woodBlock
+    Player,
+    WoodBlock
 }
 
 public class Stat
@@ -36,10 +36,10 @@ public class Stat
 
         switch (unitCode)
         {
-            case UnitCode.player:
+            case UnitCode.Player:
                 stat = new Stat(unitCode, "플레이어", 100, 100, 10, 10, 2.0f);
                 break;
-            case UnitCode.woodBlock:
+            case UnitCode.WoodBlock:
                 stat = new Stat(unitCode, "나무블록", 4, 4, 0, 65535, 0f);
                 break;
         }

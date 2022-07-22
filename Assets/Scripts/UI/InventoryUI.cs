@@ -30,12 +30,11 @@ public class InventoryUI : MonoBehaviour
 
     public void AcquireItem(Item _item, int _count = 1)
     {
-        Debug.Log("!!!");
         if(Item.ItemType.Equipment != _item.itemType)
         {
             for (int i = 0; i < slots.Length; i++)
             {
-                if (slots[i].item != null)  // null 이라면 slots[i].item.itemName 할 때 런타임 에러 나서
+                if (slots[i].item)  // null 이라면 slots[i].item.itemName 할 때 런타임 에러
                 {
                     if (slots[i].item.itemName == _item.itemName)
                     {
@@ -48,7 +47,7 @@ public class InventoryUI : MonoBehaviour
 
         for (int i = 0; i < slots.Length; i++)
         {
-            if (slots[i].item == null)
+            if (slots[i].item is null)
             {
                 slots[i].AddItem(_item, _count);
                 return;

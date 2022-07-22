@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,13 +22,15 @@ public class WoodBlock : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         stat = new Stat();
         stat = stat.SetUnitStat(unitCode);
-
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-
+        if (hpBarObject)
+        {
+            hpBarObject.transform.position =
+                Camera.main.WorldToScreenPoint(new Vector3(transform.position.x, transform.position.y + 1.0f, 0));
+        }
     }
 
     public void TakeDamage(int damage)
@@ -39,6 +42,7 @@ public class WoodBlock : MonoBehaviour
 
         if (stat.hp <= 0)
         {
+            Destroy(hpBarObject);
             Destroy(this.gameObject);
         }
 
@@ -47,11 +51,12 @@ public class WoodBlock : MonoBehaviour
 
     private void UpdateHpBar()
     {
-        if (hpBarObject == null)
+        if (hpBarObject is null)
         {
-            hpBarObject = Instantiate(hpBarPref);
-            hpBarObject.transform.parent = hpBarParent.transform;
+            hpBarObject = Instantiate(hpBarPref, hpBarParent.transform);
+            // hpBarObject.transform.SetParent(hpBarParent.transform);
             hpBarObject.GetComponent<EnemyHpBar>().Set(this);
         }
+
     }
 }

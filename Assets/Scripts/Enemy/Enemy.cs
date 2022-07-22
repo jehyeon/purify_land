@@ -1,17 +1,40 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Rigidbody2D _rigid;
+    private Stat _stat;
+    public UnitCode unitCode;
+    public abstract void Skill();
+    public abstract void Attack();
+    
+
+    private void Start()
     {
-        
+        _rigid = GetComponent<Rigidbody2D>();
+        _stat = new Stat();
+        _stat = _stat.SetUnitStat(unitCode);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void TakeDamage(int damage)
+    {
+        int realDamage = damage - _stat.defense <= 0 
+            ? 1 
+            : damage - _stat.defense;
+        _stat.hp -= realDamage;
+
+        if (_stat.hp <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+        
+        UpdateHpBar();
+    }
+
+    private void UpdateHpBar()
     {
         
     }

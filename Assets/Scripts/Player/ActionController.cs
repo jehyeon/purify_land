@@ -4,15 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ActionController : MonoBehaviour
 {
-    [SerializeField] 
+    [SerializeField]
     private InventoryUI inventory;
+    [SerializeField]
+    private Slider hpBar;
     private Rigidbody2D rigid;
     private float _h;
     private float _v;
 
+    private Collider2D playerCollider;
     private Collider2D _clickedEnemy;
     private Collider2D _clickedItem;
     private Collider2D[] _nearEnemies;
@@ -26,6 +30,8 @@ public class ActionController : MonoBehaviour
     public UnitCode unitCode;
     public Animator animator;
 
+    bool isDeath = false;
+    bool canAttack = true;
 
     void Start()
     {
@@ -33,8 +39,10 @@ public class ActionController : MonoBehaviour
         _itemLayerMask = LayerMask.GetMask("Item");
         stat = new Stat();
         stat = stat.SetUnitStat(unitCode);
+        playerCollider = GetComponent<Collider2D>();
         animator = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
+        hpBar.value = 1;
     }
 
     void Update()
@@ -45,17 +53,35 @@ public class ActionController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _h = Input.GetAxisRaw("Horizontal");
-        _v = Input.GetAxisRaw("Vertical");
-        Vector2 moveVec = new Vector2(_h, _v);
-        bool isMove = moveVec.sqrMagnitude > 0.1f;
-        animator.SetBool("isMove", isMove);
-        if (_h > 0)
-            transform.localScale = new Vector3(-1, 1, 1);
-        else if (_h < 0)
-            transform.localScale = new Vector3(1, 1, 1);
-        
-        rigid.velocity = moveVec * stat.speed*2;
+        if (!isDeath)
+        {
+            _h = Input.GetAxisRaw("Horizontal");
+            _v = Input.GetAxisRaw("Vertical");
+            Vector2 moveVec = new Vector2(_h, _v);
+            bool isMove = moveVec.sqrMagnitude > 0.1f;
+            animator.SetBool("isMove", isMove);
+            if (_h > 0)
+                transform.localScale = new Vector3(-1, 1, 1);
+            else if (_h < 0)
+                transform.localScale = new Vector3(1, 1, 1);
+
+            rigid.velocity = moveVec * stat.speed * 2;
+
+            hpBar.value = (float)stat.hp / (float)stat.maxHp;
+            
+        }
+
+        if (stat.hp <= 0)
+        {
+            rigid.velocity = Vector3.zero;
+            rigid.angularVelocity = 0;
+            isDeath = true;
+            stat.hp = 0;
+            stat.speed = 0;
+            playerCollider.enabled = false;
+
+            animator.SetBool("isDeath", true);
+        }
     }
 
     GameObject GetClickedObject(Vector2 pos)
@@ -120,8 +146,8 @@ public class ActionController : MonoBehaviour
     
     void GetKeyboardCommand()
     {
-        // F: 가까운 몬스터 공격
-        if (Input.GetKeyDown(KeyCode.F))
+        // Z: 가까운 몬스터 공격
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             _targetObject = GetNearestObject(0);
             if (_targetObject is null) return;
@@ -131,8 +157,12 @@ public class ActionController : MonoBehaviour
                     transform.localScale = new Vector3(-1, 1, 1);
                 else
                     transform.localScale = new Vector3(1, 1, 1);
-                animator.SetTrigger("attack");
-                // _targetObject.GetComponent<Enemy>().TakeDamage(stat.attack);
+                if (canAttack)
+                {
+                    animator.SetTrigger("attack");
+                    _targetObject.GetComponent<EnemyMovement>().TakeDamage(stat.attack);
+                    canAttack = false;
+                }
             }
         }
         // 스페이스바: 가까운 아이템 획득 
@@ -146,5 +176,10 @@ public class ActionController : MonoBehaviour
                 Destroy(_targetObject);
             }
         }
+    }
+
+    void SetAttackOn()
+    {
+        canAttack = true;
     }
 }

@@ -7,7 +7,7 @@ public class EnemyMovement : MonoBehaviour
 {
     Stat stat;
     Animator animator;
-    PlayerMoveTest player;
+    ActionController player;
     Detector detector;
     Spawner spawner;
 
@@ -32,7 +32,7 @@ public class EnemyMovement : MonoBehaviour
         backMap = GameObject.FindGameObjectWithTag("Floor").GetComponent<Transform>();
         movePoint = new Vector3(transform.position.x, transform.position.y);
         detector = GameObject.FindGameObjectWithTag("Detector").GetComponent<Detector>();
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMoveTest>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<ActionController>();
         spawnPoint = transform.position;
         collider = GetComponent<Collider2D>();
         rgb = GetComponent<Rigidbody2D>();

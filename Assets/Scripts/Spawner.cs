@@ -51,6 +51,7 @@ public class Spawner : MonoBehaviour
     private EnemyMovement CreateNewObject(int index)
     {
         EnemyMovement newObj = Instantiate(poolingObjectPrefab[index]).GetComponent<EnemyMovement>();
+        Debug.Log(newObj);
         newObj.gameObject.SetActive(false);
         newObj.transform.SetParent(transform);
         return newObj;

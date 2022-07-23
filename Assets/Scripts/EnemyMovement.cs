@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyMovement : MonoBehaviour
 {
+    Animator animator;
     PlayerController player;
     Transform backMap;
     Detector detector;
@@ -18,6 +19,7 @@ public class EnemyMovement : MonoBehaviour
 
     void Awake()
     {
+        animator = transform.GetComponentInChildren<Animator>();
         backMap = GameObject.FindGameObjectWithTag("Floor").GetComponent<Transform>();
         movePoint = new Vector3(transform.position.x, transform.position.y);
         detector = GameObject.FindGameObjectWithTag("Detector").GetComponent<Detector>();
@@ -27,6 +29,8 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
+        animator.SetBool("Run", true);
+        animator.SetFloat("RunState", 0.5f);
         // 스포너의 생성 순서에 따라 속도를 변경.
         spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>();
         index = spawner.Idx - 1;

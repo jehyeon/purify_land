@@ -1,34 +1,26 @@
+using System;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
-    Transform backMap;
-
-    float moveSpeed = 10;
-    Vector3 movePoint;
+    private Rigidbody2D rigid;
+    private float _h;
+    private float _v;
 
     void Awake()
     {
-        backMap = GameObject.FindGameObjectWithTag("Floor").GetComponent<Transform>();
-        movePoint = new Vector3(transform.position.x, transform.position.y);
+        rigid = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    private void FixedUpdate()
     {
-        float moveX = backMap.transform.localScale.x / 2;
-        float moveY = backMap.transform.localScale.y / 2;
+        _h = Input.GetAxisRaw("Horizontal");
+        _v = Input.GetAxisRaw("Vertical");
+        Vector2 moveVec = new Vector2(_h, _v);
 
-
-        // 좌표 이동, 목적지 도착 시 새로운 목적지 랜덤으로 생성  
-        if (Vector3.Distance(transform.position, movePoint) > 0.1f)
-            MoveToPos(movePoint);
-        else
-            movePoint = new Vector3(Random.Range(-moveX, moveX), Random.Range(-moveY, moveY));
-
-    }
-
-    void MoveToPos(Vector3 targetPos)
-    {
-        transform.position += (targetPos - transform.position).normalized * moveSpeed * Time.deltaTime;
+        rigid.velocity = moveVec * 20;
     }
 }
+

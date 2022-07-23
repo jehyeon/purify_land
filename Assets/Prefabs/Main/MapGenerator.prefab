@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1184644511543458254
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1184644511543458248}
+  - component: {fileID: 1184644511543458255}
+  - component: {fileID: 1184644511543458249}
+  m_Layer: 0
+  m_Name: MapGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1184644511543458248
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184644511543458254}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1184644511543458255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184644511543458254}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a441897568090e46b04e0dd2522fe52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  width: 100
+  height: 100
+  seed: 1
+  useRandomSeed: 1
+  floorPrefab: {fileID: 2710563067753607798, guid: 45867c64db945e1469d5fd11221aa0f5, type: 3}
+  randomFillPercent: 45
+--- !u!114 &1184644511543458249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184644511543458254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd29d4b2e8dc1b5408c5d5f6d085b2bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  width: 200
+  height: 200
+  seed: 
+  useRandomSeed: 1
+  randomFillPercent: 45
+  smoothNum: 5
+  tilemap: {fileID: 0}
+  wallTile: {fileID: 11400000, guid: 1f985628ce1ae2748aa51d8849ff4bb2, type: 2}
+  floorTile: {fileID: 11400000, guid: 7e7d1c7db4975c544a3961cb1050ff9f, type: 2}
+  colors:
+  - {r: 0, g: 0, b: 0, a: 1}
+  - {r: 1, g: 1, b: 1, a: 0}

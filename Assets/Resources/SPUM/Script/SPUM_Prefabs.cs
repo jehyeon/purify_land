@@ -13,7 +13,6 @@ public class SPUM_Prefabs : MonoBehaviour
     public bool _horse;
     public string _horseString;
 
-    
     public void PlayAnimation (int num)
     {
         switch(num)

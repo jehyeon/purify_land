@@ -6,11 +6,9 @@ using System.Text;
 
 class PacketHandler
 {
-    public static void S_ChatHandler (PacketSession session, IPacket packet)
+    public static void S_BroadcastEnterGameHandler (PacketSession session, IPacket packet)
     {
-        S_Chat chatPacket = packet as S_Chat;
+        S_BroadcastEnterGame chatPacket = packet as S_BroadcastEnterGame;
         ServerSession serverSession = session as ServerSession;
-
-        //Console.WriteLine(chatPacket.chat);
     }
 }

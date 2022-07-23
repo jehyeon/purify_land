@@ -17,12 +17,14 @@ public class Player : MonoBehaviour
     private float coolTime = 0.25f;
     public Vector2 boxSize; // 공격 판정 박스
     public Transform pos;
+    public Animator animator;
 
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
         stat = new Stat();
         stat = stat.SetUnitStat(unitCode);
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -30,6 +32,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         Attack();
+        animator.SetBool("walk", true);
     }
 
     private void FixedUpdate()
@@ -38,7 +41,7 @@ public class Player : MonoBehaviour
         _v = Input.GetAxisRaw("Vertical");
         Vector2 moveVec = new Vector2(_h, _v);
 
-        rigid.velocity = moveVec * stat.speed;
+        rigid.velocity = moveVec * stat.speed*2;
     }
 
     private void Attack()

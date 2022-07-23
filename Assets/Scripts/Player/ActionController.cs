@@ -9,7 +9,10 @@ public class ActionController : MonoBehaviour
 {
     [SerializeField] 
     private InventoryUI inventory;
-    
+    private Rigidbody2D rigid;
+    private float _h;
+    private float _v;
+
     private Collider2D _clickedEnemy;
     private Collider2D _clickedItem;
     private Collider2D[] _nearEnemies;
@@ -21,6 +24,7 @@ public class ActionController : MonoBehaviour
     private GameObject _targetObject;
     public Stat stat;
     public UnitCode unitCode;
+    public Animator animator;
 
 
     void Start()
@@ -29,6 +33,8 @@ public class ActionController : MonoBehaviour
         _itemLayerMask = LayerMask.GetMask("Item");
         stat = new Stat();
         stat = stat.SetUnitStat(unitCode);
+        animator = GetComponent<Animator>();
+        rigid = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -39,7 +45,17 @@ public class ActionController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        _h = Input.GetAxisRaw("Horizontal");
+        _v = Input.GetAxisRaw("Vertical");
+        Vector2 moveVec = new Vector2(_h, _v);
+        bool isMove = moveVec.sqrMagnitude > 0.1f;
+        animator.SetBool("isMove", isMove);
+        if (_h > 0)
+            transform.localScale = new Vector3(-1, 1, 1);
+        else if (_h < 0)
+            transform.localScale = new Vector3(1, 1, 1);
         
+        rigid.velocity = moveVec * stat.speed*2;
     }
 
     GameObject GetClickedObject(Vector2 pos)
@@ -109,8 +125,13 @@ public class ActionController : MonoBehaviour
         {
             _targetObject = GetNearestObject(0);
             if (_targetObject is null) return;
-            if (_targetObject.CompareTag("Enemy"))
+            if (_targetObject.CompareTag("Enemy") && !animator.GetCurrentAnimatorStateInfo(0).IsName("attack"))
             {
+                if(_targetObject.transform.position.x - transform.position.x > 0)
+                    transform.localScale = new Vector3(-1, 1, 1);
+                else
+                    transform.localScale = new Vector3(1, 1, 1);
+                animator.SetTrigger("attack");
                 _targetObject.GetComponent<Enemy>().TakeDamage(stat.attack);
             }
         }

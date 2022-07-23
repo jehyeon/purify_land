@@ -2734,7 +2734,7 @@ public class SPUM_Manager : MonoBehaviour
         {
             _unitObjSet._horseString = name;
             _unitObjSet._anim = _rootAnimList[1];
-            // _unitObjSet.isRideHorse = true;
+            //_unitObjSet.isRideHorse = true;
             _unitObjSet.transform.parent.localScale = new Vector3(0.7f,0.7f,0.7f);
             _unitObjSet.transform.GetChild(0).gameObject.SetActive(false);
             _unitObjSet.transform.GetChild(1).gameObject.SetActive(true);
@@ -2747,7 +2747,7 @@ public class SPUM_Manager : MonoBehaviour
         {
             _unitObjSet._horseString = "";
             _unitObjSet._anim = _rootAnimList[0];
-            // _unitObjSet.isRideHorse = false;
+            //_unitObjSet.isRideHorse = false;
             _unitObjSet.transform.parent.localScale = new Vector3(0.9f,0.9f,0.9f);
             _unitObjSet.transform.GetChild(0).gameObject.SetActive(true);
             _unitObjSet.transform.GetChild(1).gameObject.SetActive(false);

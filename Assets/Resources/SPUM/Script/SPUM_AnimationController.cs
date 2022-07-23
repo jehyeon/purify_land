@@ -22,10 +22,10 @@ public class SPUM_AnimationController : MonoBehaviour
     {
         if(unit && timeLineSlider && playSpeedSlider){
             Init();
-            unit.UnitTypeChanged.AddListener( ()=> {
-                RemoveAllAnimationButtons();
-                InitAnimationButtons();
-            });
+            // unit.UnitTypeChanged.AddListener( ()=> {
+            //     RemoveAllAnimationButtons();
+            //     InitAnimationButtons();
+            // });
         }else{
             Debug.LogError("Animator or Slider Component Not Setup!");
         }

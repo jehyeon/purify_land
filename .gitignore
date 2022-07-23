@@ -1,6 +1,7 @@
 ### vscode setting
 .vsconfig
-
+### Rider
+.idea
 ### Unity ###
 # This .gitignore file should be placed at the root of your Unity project directory
 #

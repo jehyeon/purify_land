@@ -16,7 +16,6 @@ public class Detector : MonoBehaviour
         if (other.transform.CompareTag("Player"))
         {
             isDetected = true;
-            Debug.Log("감지됨.");
         }
     }
 
@@ -25,7 +24,6 @@ public class Detector : MonoBehaviour
         if (other.transform.CompareTag("Player"))
         {
             isDetected = false;
-            Debug.Log("시야를 벗어남.");
         }
     }
 }

@@ -25,6 +25,10 @@ public class MapGeneratorTest : MonoBehaviour
     [SerializeField] private Color[] colors;
 
 
+    private void Start()
+    {
+        GenerateMap();
+    }
     private void Update()
     {
         if (Input.GetMouseButtonDown(0)) 

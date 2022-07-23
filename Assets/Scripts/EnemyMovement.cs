@@ -5,17 +5,26 @@ using UnityEngine.AI;
 
 public class EnemyMovement : MonoBehaviour
 {
+    Stat stat;
     Animator animator;
-    PlayerController player;
-    Transform backMap;
+    PlayerMoveTest player;
     Detector detector;
     Spawner spawner;
 
-    private float[] speeds = { 7, 5, 5, 3 };
+    [SerializeField]
+    UnitCode unitcode;
+
+    Transform backMap;
+    Collider2D collider;
+    Rigidbody2D rgb;
+
+    private float[] speeds = { 3, 2, 2, 3 };
     private float moveSpeed = 5;
     Vector3 spawnPoint;
     Vector3 movePoint;
     int index;
+    float time;
+    bool damageOn = false;
 
     void Awake()
     {
@@ -23,8 +32,10 @@ public class EnemyMovement : MonoBehaviour
         backMap = GameObject.FindGameObjectWithTag("Floor").GetComponent<Transform>();
         movePoint = new Vector3(transform.position.x, transform.position.y);
         detector = GameObject.FindGameObjectWithTag("Detector").GetComponent<Detector>();
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMoveTest>();
         spawnPoint = transform.position;
+        collider = GetComponent<Collider2D>();
+        rgb = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
@@ -35,10 +46,18 @@ public class EnemyMovement : MonoBehaviour
         spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>();
         index = spawner.Idx - 1;
         moveSpeed = speeds[index];
+        stat = new Stat();
+        stat = stat.SetUnitStat(unitcode);
     }
 
     void Update()
     {
+        if(damageOn)
+            time += Time.deltaTime;
+
+        rgb.velocity = Vector3.zero;
+        rgb.angularVelocity = 0;
+
         float moveX = backMap.transform.localScale.x / 2;
         float moveY = backMap.transform.localScale.y / 2;
 
@@ -63,10 +82,47 @@ public class EnemyMovement : MonoBehaviour
                 //movePoint = new Vector3(Random.Range(-moveX, moveX), Random.Range(-moveY, moveY));
             }
         }
+
+        if(stat.hp <= 0)
+        {
+            stat.hp = 0;
+            moveSpeed = 0;
+            collider.enabled = false;
+
+            animator.SetFloat("RunState", 0);
+
+            Destroy(gameObject, 1);
+        }
     }
 
     void MoveToPos(Vector3 targetPos)
     {
         transform.position += (targetPos - transform.position).normalized * moveSpeed * Time.deltaTime;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        stat.hp -= damage;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        damageOn = true;
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (damageOn)
+        {
+            if (time > 1)
+            {
+                player.stat.hp -= stat.attack;
+                time = 0;
+            }
+        }
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        damageOn = false;
     }
 }

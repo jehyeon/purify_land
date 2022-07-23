@@ -14,13 +14,13 @@ public class PlayerController : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
     }
 
-    private void FixedUpdate()
-    {
-        _h = Input.GetAxisRaw("Horizontal");
-        _v = Input.GetAxisRaw("Vertical");
-        Vector2 moveVec = new Vector2(_h, _v);
+    //private void FixedUpdate()
+    //{
+    //    _h = Input.GetAxisRaw("Horizontal");
+    //    _v = Input.GetAxisRaw("Vertical");
+    //    Vector2 moveVec = new Vector2(_h, _v);
 
-        rigid.velocity = moveVec * 20;
-    }
+    //    rigid.velocity = moveVec * 20;
+    //}
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Threading;
 using ServerCore;
 
 namespace Server
@@ -9,6 +10,12 @@ namespace Server
         static Listener _listener = new Listener();
         public static GameRoom Room = new GameRoom();
 
+        static void FlushRoom()
+        {
+            Room.Push(() => Room.Flush());
+            JobTimer.Instance.Push(FlushRoom, 250);
+        }
+
         static void Main(string[] args)
         {
             string host = Dns.GetHostName();
@@ -17,9 +24,12 @@ namespace Server
             IPEndPoint endPoint = new IPEndPoint(ipAddr, 7777);
 
             _listener.Init(endPoint, () => { return SessionManager.Instance.Generate(); });
+
+            FlushRoom();
+
             while (true)
             {
-
+                JobTimer.Instance.Flush();
             }
         }
     }

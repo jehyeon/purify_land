@@ -132,7 +132,7 @@ public class ActionController : MonoBehaviour
                 else
                     transform.localScale = new Vector3(1, 1, 1);
                 animator.SetTrigger("attack");
-                _targetObject.GetComponent<Enemy>().TakeDamage(stat.attack);
+                // _targetObject.GetComponent<Enemy>().TakeDamage(stat.attack);
             }
         }
         // 스페이스바: 가까운 아이템 획득 

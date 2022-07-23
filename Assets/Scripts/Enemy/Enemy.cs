@@ -8,6 +8,7 @@ public abstract class Enemy : MonoBehaviour
     private Rigidbody2D _rigid;
     private Stat _stat;
     public UnitCode unitCode;
+    
     public abstract void Skill();
     public abstract void Attack();
     

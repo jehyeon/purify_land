@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager
+public class NetworkPlayerManager
 {
     MyPlayer _myPlayer;
-    Dictionary<int, Player> _players = new Dictionary<int, Player>();
+    Dictionary<int, NetworkPlayer> _players = new Dictionary<int, NetworkPlayer>();
 
-    public static PlayerManager Instance { get; } = new PlayerManager();
+    public static NetworkPlayerManager Instance { get; } = new NetworkPlayerManager();
     
     public void Add(S_PlayerList packet)
     {
@@ -26,7 +26,7 @@ public class PlayerManager
             }
             else
             {
-                Player player = go.AddComponent<Player>();
+                NetworkPlayer player = go.AddComponent<NetworkPlayer>();
                 player.PlayerId = p.playerId;
                 _players.Add(p.playerId, player);
                 player.transform.position = new Vector3(p.posX, p.posZ, p.posY);
@@ -42,7 +42,7 @@ public class PlayerManager
         }
         else
         {
-            Player player = null;
+            NetworkPlayer player = null;
             if (_players.TryGetValue(packet.playerId, out player))
             {
                 player.transform.position = new Vector3(packet.posX, packet.posZ, packet.posY);
@@ -60,7 +60,7 @@ public class PlayerManager
         Object obj = Resources.Load("Player");
         GameObject go = Object.Instantiate(obj) as GameObject;
 
-        Player player = go.AddComponent<Player>();
+        NetworkPlayer player = go.AddComponent<NetworkPlayer>();
         _players.Add(packet.playerId, player);
         player.transform.position = new Vector3(packet.posX, packet.posZ, packet.posY);
     }
@@ -74,7 +74,7 @@ public class PlayerManager
         }
         else
         {
-            Player player = null;
+            NetworkPlayer player = null;
             if (_players.TryGetValue(packet.playerId, out player))
             {
                 GameObject.Destroy(player.gameObject);

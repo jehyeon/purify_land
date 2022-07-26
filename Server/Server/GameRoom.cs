@@ -46,8 +46,7 @@ namespace Server
                     isSelf = (s == session),
                     playerId = s.SessionId,
                     posX = s.PosX,
-                    posY = s.PosY,
-                    posZ = s.PosZ,
+                    posY = s.PosY
                 });
             }
 
@@ -58,7 +57,6 @@ namespace Server
             enter.playerId = session.SessionId;
             enter.posX = 0;
             enter.posY = 0;
-            enter.posZ = 0;
 
             Broadcast(enter.Write());
         }
@@ -80,14 +78,12 @@ namespace Server
             // 좌표 이동
             session.PosX = packet.posX;
             session.PosY = packet.posY;
-            session.PosZ = packet.posZ;
 
             // 다른 플레이어에게 전달
             S_BroadcastMove move = new S_BroadcastMove();
             move.playerId = session.SessionId;
             move.posX = session.PosX;
             move.posY = session.PosY;
-            move.posZ = session.PosZ;
 
             Broadcast(move.Write());
         }

@@ -21,7 +21,7 @@ public class NetworkPlayerManager
             {
                 MyPlayer myPlayer = go.AddComponent<MyPlayer>();
                 myPlayer.PlayerId = p.playerId;
-                myPlayer.transform.position = new Vector3(p.posX, p.posZ, p.posY);
+                myPlayer.transform.position = new Vector3(p.posX, p.posY, 0f);
                 _myPlayer = myPlayer;
             }
             else
@@ -29,7 +29,7 @@ public class NetworkPlayerManager
                 NetworkPlayer player = go.AddComponent<NetworkPlayer>();
                 player.PlayerId = p.playerId;
                 _players.Add(p.playerId, player);
-                player.transform.position = new Vector3(p.posX, p.posZ, p.posY);
+                player.transform.position = new Vector3(p.posX, p.posY, 0f);
             }
         }
     }
@@ -38,14 +38,14 @@ public class NetworkPlayerManager
     {
         if (_myPlayer.PlayerId == packet.playerId)
         {
-            _myPlayer.transform.position = new Vector3(packet.posX, packet.posZ, packet.posY);
+            // _myPlayer.transform.position = new Vector3(packet.posX, packet.posY, 0f);
         }
         else
         {
             NetworkPlayer player = null;
             if (_players.TryGetValue(packet.playerId, out player))
             {
-                player.transform.position = new Vector3(packet.posX, packet.posZ, packet.posY);
+                player.transform.position = new Vector3(packet.posX, packet.posY, 0f);
             }
         }
     }
@@ -62,7 +62,7 @@ public class NetworkPlayerManager
 
         NetworkPlayer player = go.AddComponent<NetworkPlayer>();
         _players.Add(packet.playerId, player);
-        player.transform.position = new Vector3(packet.posX, packet.posZ, packet.posY);
+        player.transform.position = new Vector3(packet.posX, packet.posY, 0f);
     }
 
     public void LeaveGame(S_BroadcastLeaveGame packet)

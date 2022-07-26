@@ -15,7 +15,7 @@ public class NetworkManager : MonoBehaviour
         _session.Send(sendBuff);
     }
 
-    void Start()
+    private void Start()
     {
         string host = Dns.GetHostName();
         IPHostEntry ipHost = Dns.GetHostEntry(host);
@@ -27,8 +27,7 @@ public class NetworkManager : MonoBehaviour
         connector.Connect(endPoint, () => { return _session; }, 1);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         List<IPacket> list = PacketQueue.Instance.PopAll();
         

@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
         _v = Input.GetAxisRaw("Vertical");
         Vector2 moveVec = new Vector2(_h, _v);
 
-        rigid.velocity = moveVec * stat.speed*2;
+        rigid.velocity = moveVec * stat.speed * 2;
     }
 
     private void Attack()

@@ -28,7 +28,6 @@ public class S_BroadcastEnterGame : IPacket
 	public int playerId;
 	public float posX;
 	public float posY;
-	public float posZ;
 
 	public ushort Protocol { get { return (ushort)PacketID.S_BroadcastEnterGame; } }
 
@@ -42,8 +41,6 @@ public class S_BroadcastEnterGame : IPacket
 		this.posX = BitConverter.ToSingle(segment.Array, segment.Offset + count);
 		count += sizeof(float);
 		this.posY = BitConverter.ToSingle(segment.Array, segment.Offset + count);
-		count += sizeof(float);
-		this.posZ = BitConverter.ToSingle(segment.Array, segment.Offset + count);
 		count += sizeof(float);
 	}
 
@@ -60,8 +57,6 @@ public class S_BroadcastEnterGame : IPacket
 		Array.Copy(BitConverter.GetBytes(this.posX), 0, segment.Array, segment.Offset + count, sizeof(float));
 		count += sizeof(float);
 		Array.Copy(BitConverter.GetBytes(this.posY), 0, segment.Array, segment.Offset + count, sizeof(float));
-		count += sizeof(float);
-		Array.Copy(BitConverter.GetBytes(this.posZ), 0, segment.Array, segment.Offset + count, sizeof(float));
 		count += sizeof(float);
 
 		Array.Copy(BitConverter.GetBytes(count), 0, segment.Array, segment.Offset, sizeof(ushort));
@@ -140,7 +135,6 @@ public class S_PlayerList : IPacket
 		public int playerId;
 		public float posX;
 		public float posY;
-		public float posZ;
 	
 		public void Read(ArraySegment<byte> segment, ref ushort count)
 		{
@@ -151,8 +145,6 @@ public class S_PlayerList : IPacket
 			this.posX = BitConverter.ToSingle(segment.Array, segment.Offset + count);
 			count += sizeof(float);
 			this.posY = BitConverter.ToSingle(segment.Array, segment.Offset + count);
-			count += sizeof(float);
-			this.posZ = BitConverter.ToSingle(segment.Array, segment.Offset + count);
 			count += sizeof(float);
 		}
 	
@@ -166,8 +158,6 @@ public class S_PlayerList : IPacket
 			Array.Copy(BitConverter.GetBytes(this.posX), 0, segment.Array, segment.Offset + count, sizeof(float));
 			count += sizeof(float);
 			Array.Copy(BitConverter.GetBytes(this.posY), 0, segment.Array, segment.Offset + count, sizeof(float));
-			count += sizeof(float);
-			Array.Copy(BitConverter.GetBytes(this.posZ), 0, segment.Array, segment.Offset + count, sizeof(float));
 			count += sizeof(float);
 			return success;
 		}	
@@ -215,7 +205,6 @@ public class C_Move : IPacket
 {
 	public float posX;
 	public float posY;
-	public float posZ;
 
 	public ushort Protocol { get { return (ushort)PacketID.C_Move; } }
 
@@ -227,8 +216,6 @@ public class C_Move : IPacket
 		this.posX = BitConverter.ToSingle(segment.Array, segment.Offset + count);
 		count += sizeof(float);
 		this.posY = BitConverter.ToSingle(segment.Array, segment.Offset + count);
-		count += sizeof(float);
-		this.posZ = BitConverter.ToSingle(segment.Array, segment.Offset + count);
 		count += sizeof(float);
 	}
 
@@ -244,8 +231,6 @@ public class C_Move : IPacket
 		count += sizeof(float);
 		Array.Copy(BitConverter.GetBytes(this.posY), 0, segment.Array, segment.Offset + count, sizeof(float));
 		count += sizeof(float);
-		Array.Copy(BitConverter.GetBytes(this.posZ), 0, segment.Array, segment.Offset + count, sizeof(float));
-		count += sizeof(float);
 
 		Array.Copy(BitConverter.GetBytes(count), 0, segment.Array, segment.Offset, sizeof(ushort));
 
@@ -258,7 +243,6 @@ public class S_BroadcastMove : IPacket
 	public int playerId;
 	public float posX;
 	public float posY;
-	public float posZ;
 
 	public ushort Protocol { get { return (ushort)PacketID.S_BroadcastMove; } }
 
@@ -272,8 +256,6 @@ public class S_BroadcastMove : IPacket
 		this.posX = BitConverter.ToSingle(segment.Array, segment.Offset + count);
 		count += sizeof(float);
 		this.posY = BitConverter.ToSingle(segment.Array, segment.Offset + count);
-		count += sizeof(float);
-		this.posZ = BitConverter.ToSingle(segment.Array, segment.Offset + count);
 		count += sizeof(float);
 	}
 
@@ -290,8 +272,6 @@ public class S_BroadcastMove : IPacket
 		Array.Copy(BitConverter.GetBytes(this.posX), 0, segment.Array, segment.Offset + count, sizeof(float));
 		count += sizeof(float);
 		Array.Copy(BitConverter.GetBytes(this.posY), 0, segment.Array, segment.Offset + count, sizeof(float));
-		count += sizeof(float);
-		Array.Copy(BitConverter.GetBytes(this.posZ), 0, segment.Array, segment.Offset + count, sizeof(float));
 		count += sizeof(float);
 
 		Array.Copy(BitConverter.GetBytes(count), 0, segment.Array, segment.Offset, sizeof(ushort));

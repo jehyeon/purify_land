@@ -4,7 +4,6 @@
 		<int name="playerId" />
 		<float name="posX" />
 		<float name="posY" />
-		<float name="posZ" />
 	</packet>
 	<packet name="C_LeaveGame">
 	</packet>
@@ -17,18 +16,15 @@
 			<int name="playerId" />
 			<float name="posX" />
 			<float name="posY" />
-			<float name="posZ" />
 		</list>
 	</packet>
 	<packet name="C_Move">
 		<float name="posX" />
 		<float name="posY" />
-		<float name="posZ" />
 	</packet>
 	<packet name="S_BroadcastMove">
 		<int name="playerId" />
 		<float name="posX" />
 		<float name="posY" />
-		<float name="posZ" />
 	</packet>
 </PDL>

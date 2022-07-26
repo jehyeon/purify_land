@@ -28,6 +28,8 @@ class PacketHandler
             return;
         }
 
+        Console.WriteLine($"{movePacket.posX}, {movePacket.posZ}");
+
         GameRoom room = clientSession.Room;
         room.Push(() => room.Move(clientSession, movePacket));
     }

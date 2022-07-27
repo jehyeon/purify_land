@@ -4,7 +4,6 @@
 		<int name="playerId" />
 		<float name="posX" />
 		<float name="posY" />
-		<bool name="isLookRight" />
 	</packet>
 	<packet name="C_LeaveGame">
 	</packet>
@@ -17,63 +16,15 @@
 			<int name="playerId" />
 			<float name="posX" />
 			<float name="posY" />
-			<bool name="isLookRight" />
 		</list>
 	</packet>
 	<packet name="C_Move">
 		<float name="posX" />
 		<float name="posY" />
-		<bool name="isLookRight" />
 	</packet>
 	<packet name="S_BroadcastMove">
 		<int name="playerId" />
 		<float name="posX" />
 		<float name="posY" />
-		<bool name="isLookRight" />
-	</packet>
-	<packet name="C_Act">
-		<int name="actionType" />
-	</packet>
-	<packet name="S_BroadcastAct">
-		<int name="playerId" />
-		<int name="actionType" />
-	</packet>
-	<packet name="C_AddEnemy">
-		<int name="enemyOriginId" />
-		<int name="enemyId" />
-		<float name="posX" />
-		<float name="posY" />
-	</packet>
-	<packet name="S_BroadcastAddEnemy">
-		<int name="enemyOriginId" />
-		<int name="enemyId" />
-		<float name="posX" />
-		<float name="posY" />
-	</packet>
-	<packet name="C_RemoveEnemy">
-		<int name="enemyId" />
-	</packet>
-	<packet name="S_BroadcastRemoveEnemy">
-		<int name="enemyId" />
-	</packet>
-	<packet name="C_MoveEnemy">
-		<int name="enemyId" />
-		<float name="posX" />
-		<float name="posY" />
-		<bool name="isLookRight" />
-	</packet>
-	<packet name="S_BroadcastMoveEnemy">
-		<int name="enemyId" />
-		<float name="posX" />
-		<float name="posY" />
-		<bool name="isLookRight" />
-	</packet>
-	<packet name="C_ActEnemy">
-		<int name="enemyId" />
-		<int name="actionType" /> 
-	</packet>
-	<packet name="S_BroadcastActEnemy">
-		<int name="enemyId" />
-		<int name="actionType" />
 	</packet>
 </PDL>

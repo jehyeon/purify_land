@@ -2,48 +2,62 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MyPlayer : NetworkPlayer
+public class MyPlayer : Player
 {
+    // [SerializeField] 
+    // private InventoryUI inventory;
     private NetworkManager _network;
-    private Rigidbody2D rigid;
     private float _h;
     private float _v;
 
-    private void Start()
+    protected new void Start()
     {
-        rigid = GetComponent<Rigidbody2D>();
-
+        base.Start();
         NetworkManager _network = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
         StartCoroutine("CoSendPacket");
     }
 
-    private void Update()
+    private new void Update()
     {
-        _h = Input.GetAxisRaw("Horizontal");
-        _v = Input.GetAxisRaw("Vertical");
-        Vector2 moveVec = new Vector2(_h, _v);
-
-        rigid.velocity = moveVec * 5 * 2;   // !!!
+        ComputeMoveVec();
+        base.Update();
     }
 
+    private void ComputeMoveVec()
+    {
+        // 이동 벡터 계산
+        _h = Input.GetAxisRaw("Horizontal");
+        _v = Input.GetAxisRaw("Vertical");
+
+        this.MoveVec = new Vector2(_h, _v).normalized;
+        this.DetinationPos = this.transform.position + MoveVec;
+    }
+
+    // -------------------------------------------------------------------------
+    // 서버 패킷 전송
+    // -------------------------------------------------------------------------
     IEnumerator CoSendPacket()
     {
         // 현재 위치 패킷 전송
         while (true)
         {
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.2f);
 
             C_Move movePacket = new C_Move();
-            movePacket.posX = Mathf.Round(this.transform.position.x * 100) * 0.01f;
-            movePacket.posY = Mathf.Round(this.transform.position.y * 100) * 0.01f;
-            Debug.Log(movePacket.posX);
+            movePacket.posX = this.transform.position.x;
+            movePacket.posY = this.transform.position.y;
 
             if (_network == null)
             {
                 _network = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
-                Debug.Log("못 찾음");
             }
+
             _network.Send(movePacket.Write());
         }
+    }
+
+    public void OK(string text)
+    {
+        Debug.Log(text);
     }
 }

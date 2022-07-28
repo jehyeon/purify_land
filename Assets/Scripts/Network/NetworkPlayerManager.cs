@@ -5,13 +5,13 @@ using UnityEngine;
 public class NetworkPlayerManager
 {
     MyPlayer _myPlayer;
-    Dictionary<int, NetworkPlayer> _players = new Dictionary<int, NetworkPlayer>();
+    Dictionary<int, Player> _players = new Dictionary<int, Player>();
 
     public static NetworkPlayerManager Instance { get; } = new NetworkPlayerManager();
     
     public void Add(S_PlayerList packet)
     {
-        Object obj = Resources.Load("Player");
+        Object obj = Resources.Load("Prefabs/Player");
 
         foreach (S_PlayerList.Player p in packet.players)
         {
@@ -19,17 +19,18 @@ public class NetworkPlayerManager
 
             if (p.isSelf)
             {
-                MyPlayer myPlayer = go.AddComponent<MyPlayer>();
+                // 자기 자신인 경우
+                MyPlayer myPlayer = go.transform.GetChild(0).gameObject.AddComponent<MyPlayer>();
                 myPlayer.PlayerId = p.playerId;
-                myPlayer.transform.position = new Vector3(p.posX, p.posY, 0f);
+                myPlayer.transform.position = Vector2.zero;
                 _myPlayer = myPlayer;
             }
             else
             {
-                NetworkPlayer player = go.AddComponent<NetworkPlayer>();
+                Player player = go.transform.GetChild(0).gameObject.AddComponent<Player>();
                 player.PlayerId = p.playerId;
                 _players.Add(p.playerId, player);
-                player.transform.position = new Vector3(p.posX, p.posY, 0f);
+                player.transform.position = new Vector2(p.posX, p.posY);
             }
         }
     }
@@ -38,14 +39,22 @@ public class NetworkPlayerManager
     {
         if (_myPlayer.PlayerId == packet.playerId)
         {
-            // _myPlayer.transform.position = new Vector3(packet.posX, packet.posY, 0f);
+            _myPlayer.DestinationPos = new Vector2(packet.posX, packet.posY);
         }
         else
         {
-            NetworkPlayer player = null;
+            // 다른 유저의 이동 패킷을 받은 경우
+            Player player = null;
             if (_players.TryGetValue(packet.playerId, out player))
             {
-                player.transform.position = new Vector3(packet.posX, packet.posY, 0f);
+                // Vector3 nextPlayerPos = new Vector3(packet.posX, packet.posY, 0f);
+                // Vector3 vectDiff = nextPlayerPos - player.transform.position;
+
+                player.DestinationPos = new Vector2(packet.posX, packet.posY);
+            }
+            else
+            {
+                _myPlayer.OK("player list에 없는 유저의 무브 패킷");
             }
         }
     }
@@ -57,12 +66,12 @@ public class NetworkPlayerManager
             return;
         }
         
-        Object obj = Resources.Load("Player");
+        Object obj = Resources.Load("Prefabs/Player");
         GameObject go = Object.Instantiate(obj) as GameObject;
 
-        NetworkPlayer player = go.AddComponent<NetworkPlayer>();
+        Player player = go.transform.GetChild(0).gameObject.AddComponent<Player>();
         _players.Add(packet.playerId, player);
-        player.transform.position = new Vector3(packet.posX, packet.posY, 0f);
+        player.transform.position = Vector2.zero;
     }
 
     public void LeaveGame(S_BroadcastLeaveGame packet)
@@ -74,7 +83,7 @@ public class NetworkPlayerManager
         }
         else
         {
-            NetworkPlayer player = null;
+            Player player = null;
             if (_players.TryGetValue(packet.playerId, out player))
             {
                 GameObject.Destroy(player.gameObject);

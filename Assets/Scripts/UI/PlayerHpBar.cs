@@ -10,7 +10,7 @@ public class PlayerHpBar : MonoBehaviour
     private Player player;
     void Start()
     {
-        pStat = player.stat;
+        // pStat = player.stat;
     }
     
     void Update()

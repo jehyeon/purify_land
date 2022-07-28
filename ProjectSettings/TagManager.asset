@@ -9,6 +9,7 @@ TagManager:
   - Spawner
   - Floor
   - Item
+  - Ground
   layers:
   - Default
   - TransparentFX

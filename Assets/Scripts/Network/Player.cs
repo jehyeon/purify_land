@@ -11,12 +11,10 @@ public class Player : MonoBehaviour
     protected float speed = 3;
 
     public int PlayerId { get; set; }
-    public Vector3 MoveVec { get; set; }
-    public Vector3 DetinationPos;
+    public Vector3 DestinationPos;
     public float tempDiff = 0.01f;
 
-    // private Stat _stat;
-    // private UnitCode _unitCode;
+    private Vector3 _moveVec;
 
     protected PlayerAnimationController Animator { get; private set; }
 
@@ -29,57 +27,34 @@ public class Player : MonoBehaviour
 
     protected void Update()
     {
-        Move();
+        MoveToPoint();
     }
     
     // -------------------------------------------------------------------------
     // 이동
     // -------------------------------------------------------------------------
-    protected void Move()
+    private void MoveToPoint()
     {
-        if ((DetinationPos - this.transform.position).sqrMagnitude < tempDiff)
+        if ((DestinationPos - this.transform.position).sqrMagnitude < tempDiff)
+        // if (this.MoveVec == Vector3.zero)
         {
-            // 이동 벡터가 없는 경우
-            Stop();
+            this.Animator.IdleAnimation();
             return;
         }
 
         this.Animator.MoveAnimation(speed);
-        this.MoveVec = (DetinationPos - this.transform.position).normalized;
-        this.transform.position += this.MoveVec * Time.deltaTime * speed;
+        this._moveVec = (DestinationPos - this.transform.position).normalized;
+        // this.MoveVec = 
+        this.transform.position += _moveVec * Time.deltaTime * speed;
 
         // 캐릭터 좌우 회전
-        if (MoveVec.x > 0)
+        if (_moveVec.x > 0)
         {
             transform.localScale = new Vector3(-1, 1, 1);
         }
-        else if (MoveVec.x < 0)
+        else if (_moveVec.x < 0)
         {
             transform.localScale = new Vector3(1, 1, 1);
         }
     }
-
-    private void Stop()
-    {
-        MoveVec = Vector3.zero;
-        this.Animator.IdleAnimation();
-    }
-
-    // private void MoveToPoint()
-    // {
-    //     Vector2 myPosition = this.transform.position;
-    //     if ((myPosition - DestinationPos).sqrMagnitude < checkMovedLimit)
-    //     {
-    //         Rigid.velocity = Vector2.zero;
-    //         this.Animator.IdleAnimation();
-    //     }
-    //     else
-    //     {
-    //         // DestinationPos로 이동 !!!
-    //         Vector2 moveVec = (DestinationPos - myPosition).normalized;
-    //         Rigid.velocity = moveVec * 10;   // !!!
-
-    //         this.Animator.MoveAnimation();
-    //     }
-    // }
 }

@@ -39,7 +39,7 @@ public class NetworkPlayerManager
     {
         if (_myPlayer.PlayerId == packet.playerId)
         {
-            _myPlayer.DetinationPos = new Vector2(packet.posX, packet.posY);
+            _myPlayer.DestinationPos = new Vector2(packet.posX, packet.posY);
         }
         else
         {
@@ -50,7 +50,7 @@ public class NetworkPlayerManager
                 // Vector3 nextPlayerPos = new Vector3(packet.posX, packet.posY, 0f);
                 // Vector3 vectDiff = nextPlayerPos - player.transform.position;
 
-                player.DetinationPos = new Vector2(packet.posX, packet.posY);
+                player.DestinationPos = new Vector2(packet.posX, packet.posY);
             }
             else
             {

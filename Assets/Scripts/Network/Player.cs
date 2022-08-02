@@ -57,4 +57,17 @@ public class Player : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
         }
     }
+    
+    // -------------------------------------------------------------------------
+    // 애니메이션
+    // -------------------------------------------------------------------------
+    public void ActAnimation(int actionType)
+    {
+        System.Action animationFunc = null;
+
+        if (Animator.Animations.TryGetValue(actionType, out animationFunc))
+        {
+            animationFunc();
+        }
+    }
 }

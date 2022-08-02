@@ -12,6 +12,8 @@ public enum PacketID
 	S_PlayerList = 4,
 	C_Move = 5,
 	S_BroadcastMove = 6,
+	C_Act = 7,
+	S_BroadcastAct = 8,
 	
 }
 
@@ -273,6 +275,75 @@ public class S_BroadcastMove : IPacket
 		count += sizeof(float);
 		Array.Copy(BitConverter.GetBytes(this.posY), 0, segment.Array, segment.Offset + count, sizeof(float));
 		count += sizeof(float);
+
+		Array.Copy(BitConverter.GetBytes(count), 0, segment.Array, segment.Offset, sizeof(ushort));
+
+		return SendBufferHelper.Close(count);
+	}
+}
+
+public class C_Act : IPacket
+{
+	public int actionType;
+
+	public ushort Protocol { get { return (ushort)PacketID.C_Act; } }
+
+	public void Read(ArraySegment<byte> segment)
+	{
+		ushort count = 0;
+		count += sizeof(ushort);
+		count += sizeof(ushort);
+		this.actionType = BitConverter.ToInt32(segment.Array, segment.Offset + count);
+		count += sizeof(int);
+	}
+
+	public ArraySegment<byte> Write()
+	{
+		ArraySegment<byte> segment = SendBufferHelper.Open(4096);
+		ushort count = 0;
+
+		count += sizeof(ushort);
+		Array.Copy(BitConverter.GetBytes((ushort)PacketID.C_Act), 0, segment.Array, segment.Offset + count, sizeof(ushort));
+		count += sizeof(ushort);
+		Array.Copy(BitConverter.GetBytes(this.actionType), 0, segment.Array, segment.Offset + count, sizeof(int));
+		count += sizeof(int);
+
+		Array.Copy(BitConverter.GetBytes(count), 0, segment.Array, segment.Offset, sizeof(ushort));
+
+		return SendBufferHelper.Close(count);
+	}
+}
+
+public class S_BroadcastAct : IPacket
+{
+	public int playerId;
+	public int actionType;
+
+	public ushort Protocol { get { return (ushort)PacketID.S_BroadcastAct; } }
+
+	public void Read(ArraySegment<byte> segment)
+	{
+		ushort count = 0;
+		count += sizeof(ushort);
+		count += sizeof(ushort);
+		this.playerId = BitConverter.ToInt32(segment.Array, segment.Offset + count);
+		count += sizeof(int);
+		this.actionType = BitConverter.ToInt32(segment.Array, segment.Offset + count);
+		count += sizeof(int);
+	}
+
+	public ArraySegment<byte> Write()
+	{
+		ArraySegment<byte> segment = SendBufferHelper.Open(4096);
+		ushort count = 0;
+
+		count += sizeof(ushort);
+		Array.Copy(BitConverter.GetBytes((ushort)PacketID.S_BroadcastAct), 0, segment.Array, segment.Offset + count, sizeof(ushort));
+		count += sizeof(ushort);
+		Array.Copy(BitConverter.GetBytes(this.playerId), 0, segment.Array, segment.Offset + count, sizeof(int));
+		count += sizeof(int);
+		Array.Copy(BitConverter.GetBytes(this.actionType), 0, segment.Array, segment.Offset + count, sizeof(int));
+		count += sizeof(int);
 
 		Array.Copy(BitConverter.GetBytes(count), 0, segment.Array, segment.Offset, sizeof(ushort));
 

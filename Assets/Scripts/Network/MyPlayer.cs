@@ -14,7 +14,6 @@ public class MyPlayer : Player
     {
         base.Start();
         NetworkManager _network = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
-        // StartCoroutine("CoSendPacket");
     }
 
     private new void Update()
@@ -27,6 +26,14 @@ public class MyPlayer : Player
     {
         if (Input.GetMouseButtonDown(0))
         {
+            // 좌클릭
+            // !!! 임시
+            this.ActAnimation(1);
+            this.SendActPacket(1);
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
             // 우클릭
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -38,26 +45,17 @@ public class MyPlayer : Player
                 if (hit.collider.CompareTag("Ground"))
                 {
                     this.DestinationPos = hit.point;
-                    CoSendPacket();
+                    SendMovePacket();
                     return;
                 }
             }
         }
-        // 이동 벡터 계산
-        // _h = Input.GetAxisRaw("Horizontal");
-        // _v = Input.GetAxisRaw("Vertical");
-
-        // this._moveVec = new Vector2(_h, _v).normalized;
-        // // this.DestinationPos = this.transform.position + MoveVec;
-        // if (this._moveVec != Vector3.zero)
-        // {
-        // }
     }
 
     // -------------------------------------------------------------------------
     // 서버 패킷 전송
     // -------------------------------------------------------------------------
-    private void CoSendPacket()
+    private void SendMovePacket()
     {
         C_Move movePacket = new C_Move();
 
@@ -71,41 +69,18 @@ public class MyPlayer : Player
 
         _network.Send(movePacket.Write());
     }
-    // IEnumerator CoSendPacket()
-    // {
-    //     // 현재 위치 패킷 전송
-    //     while (true)
-    //     {
-    //         yield return new WaitForSeconds(0.017f);
 
-    //         C_Move movePacket = new C_Move();
-
-    //         movePacket.posX = this._moveVec.x;
-    //         movePacket.posY = this._moveVec.y;
-    //         // if (this.MoveVec != Vector3.zero)
-    //         // {
-    //         //     // 정지한 경우 현재 위치를 보냄
-    //         //     movePacket.posX = this.transform.position.x;
-    //         //     movePacket.posY = this.transform.position.y;
-    //         // }
-    //         // else
-    //         // {
-    //         //     // 이동 중인 경우 moveVec을 포함하여 갈 위치를 보냄
-    //         //     movePacket.posX = this.DestinationPos.x;
-    //         //     movePacket.posY = this.DestinationPos.y;
-    //         // }
-
-    //         if (_network == null)
-    //         {
-    //             _network = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
-    //         }
-
-    //         _network.Send(movePacket.Write());
-    //     }
-    // }
-
-    public void OK(string text)
+    private void SendActPacket(int actionType)
     {
-        Debug.Log(text);
+        C_Act actPacket = new C_Act();
+
+        actPacket.actionType = actionType;
+
+        if (_network == null)
+        {
+            _network = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+        }
+
+        _network.Send(actPacket.Write());
     }
 }

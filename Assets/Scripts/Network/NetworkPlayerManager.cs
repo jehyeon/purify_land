@@ -8,7 +8,10 @@ public class NetworkPlayerManager
     Dictionary<int, Player> _players = new Dictionary<int, Player>();
 
     public static NetworkPlayerManager Instance { get; } = new NetworkPlayerManager();
-    
+
+    // -------------------------------------------------------------------------
+    // 서버 접속, 나가기
+    // -------------------------------------------------------------------------
     public void Add(S_PlayerList packet)
     {
         Object obj = Resources.Load("Prefabs/Player");
@@ -31,30 +34,6 @@ public class NetworkPlayerManager
                 player.PlayerId = p.playerId;
                 _players.Add(p.playerId, player);
                 player.transform.position = new Vector2(p.posX, p.posY);
-            }
-        }
-    }
-
-    public void Move(S_BroadcastMove packet)
-    {
-        if (_myPlayer.PlayerId == packet.playerId)
-        {
-            _myPlayer.DestinationPos = new Vector2(packet.posX, packet.posY);
-        }
-        else
-        {
-            // 다른 유저의 이동 패킷을 받은 경우
-            Player player = null;
-            if (_players.TryGetValue(packet.playerId, out player))
-            {
-                // Vector3 nextPlayerPos = new Vector3(packet.posX, packet.posY, 0f);
-                // Vector3 vectDiff = nextPlayerPos - player.transform.position;
-
-                player.DestinationPos = new Vector2(packet.posX, packet.posY);
-            }
-            else
-            {
-                _myPlayer.OK("player list에 없는 유저의 무브 패킷");
             }
         }
     }
@@ -88,6 +67,45 @@ public class NetworkPlayerManager
             {
                 GameObject.Destroy(player.gameObject);
                 _players.Remove(packet.playerId);
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // 캐릭터 이동
+    // -------------------------------------------------------------------------    
+    public void Move(S_BroadcastMove packet)
+    {
+        if (_myPlayer.PlayerId == packet.playerId)
+        {
+            _myPlayer.DestinationPos = new Vector2(packet.posX, packet.posY);
+        }
+        else
+        {
+            // 다른 유저의 이동 패킷을 받은 경우
+            Player player = null;
+            if (_players.TryGetValue(packet.playerId, out player))
+            {
+                // Vector3 nextPlayerPos = new Vector3(packet.posX, packet.posY, 0f);
+                // Vector3 vectDiff = nextPlayerPos - player.transform.position;
+
+                player.DestinationPos = new Vector2(packet.posX, packet.posY);
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // 캐릭터 애니메이션 재생
+    // -------------------------------------------------------------------------
+    public void Act(S_BroadcastAct packet)
+    {
+        if (_myPlayer.PlayerId != packet.playerId)
+        {
+            // 다른 유저의 이동 패킷을 받은 경우
+            Player player = null;
+            if (_players.TryGetValue(packet.playerId, out player))
+            {
+                player.ActAnimation(packet.actionType);
             }
         }
     }

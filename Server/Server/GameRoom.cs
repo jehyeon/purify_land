@@ -87,5 +87,15 @@ namespace Server
 
             Broadcast(move.Write());
         }
+
+        public void Act(ClientSession session, C_Act packet)
+        {
+            // 다른 플레이어에게 전달
+            S_BroadcastAct act = new S_BroadcastAct();
+            act.playerId = session.SessionId;
+            act.actionType = packet.actionType;
+
+            Broadcast(act.Write());
+        }
     }
 }

@@ -38,4 +38,12 @@ class PacketHandler
         
         NetworkPlayerManager.Instance.Move(pkt);
     }
+    
+    public static void S_BroadcastActHandler(PacketSession session, IPacket packet)
+    {
+        S_BroadcastAct pkt = packet as S_BroadcastAct;
+        ServerSession serverSession = session as ServerSession;
+        
+        NetworkPlayerManager.Instance.Act(pkt);
+    }
 }

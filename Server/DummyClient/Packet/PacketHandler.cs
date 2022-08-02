@@ -29,4 +29,10 @@ class PacketHandler
         S_BroadcastMove pkt = packet as S_BroadcastMove;
         ServerSession serverSession = session as ServerSession;
     }
+    
+    public static void S_BroadcastActHandler(PacketSession session, IPacket packet)
+    {
+        S_BroadcastMove pkt = packet as S_BroadcastMove;
+        ServerSession serverSession = session as ServerSession;
+    }
 }

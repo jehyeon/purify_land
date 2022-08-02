@@ -28,10 +28,25 @@ class PacketHandler
             return;
         }
 
-        Console.WriteLine($"{movePacket.posX}, {movePacket.posY}");
+        // Console.WriteLine($"{movePacket.posX}, {movePacket.posY}");
 
         GameRoom room = clientSession.Room;
         room.Push(() => room.Move(clientSession, movePacket));
     }
 
+    public static void C_ActHandler(PacketSession session, IPacket packet)
+    {
+        C_Act actPacket = packet as C_Act;
+        ClientSession clientSession = session as ClientSession;
+
+        if (clientSession.Room == null)
+        {
+            return;
+        }
+
+        // Console.WriteLine($"{movePacket.posX}, {movePacket.posY}");
+
+        GameRoom room = clientSession.Room;
+        room.Push(() => room.Act(clientSession, actPacket));
+    }
 }

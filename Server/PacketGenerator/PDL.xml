@@ -27,4 +27,11 @@
 		<float name="posX" />
 		<float name="posY" />
 	</packet>
+	<packet name="C_Act">
+		<int name="actionType" />
+	</packet>
+	<packet name="S_BroadcastAct">
+		<int name="playerId" />
+		<int name="actionType" />
+	</packet>
 </PDL>

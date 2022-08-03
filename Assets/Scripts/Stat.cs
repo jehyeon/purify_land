@@ -7,7 +7,7 @@ public enum UnitCode
 
 public class Stat
 {
-    // ¸â¹ö ÇÁ·ÎÆÛÆ¼
+    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼
     public UnitCode unitCode { get; }
     public string name { get; set; }
     public int hp { get; set; }
@@ -18,6 +18,9 @@ public class Stat
 
     public Stat()
     {
+        // !!! Temp
+        hp = 100;
+        maxHp = 100;
     }
 
     public Stat(UnitCode unitCode, string name, int hp, int maxHp, int attack, int defense, float speed)
@@ -38,13 +41,13 @@ public class Stat
         switch (unitCode)
         {
             case UnitCode.Player:
-                stat = new Stat(unitCode, "ÇÃ·¹ÀÌ¾î", 100, 100, 10, 10, 7);
+                stat = new Stat(unitCode, "ï¿½Ã·ï¿½ï¿½Ì¾ï¿½", 100, 100, 10, 10, 7);
                 break;
             case UnitCode.Monster:
-                stat = new Stat(unitCode, "Á»ºñ", 30, 30, 5, 0, 5);
+                stat = new Stat(unitCode, "ï¿½ï¿½ï¿½ï¿½", 30, 30, 5, 0, 5);
                 break;
             case UnitCode.WoodBlock:
-                stat = new Stat(unitCode, "³ª¹«ºí·Ï", 4, 4, 0, 65535, 0f);
+                stat = new Stat(unitCode, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", 4, 4, 0, 65535, 0f);
                 break;
         }
 

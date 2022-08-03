@@ -30,6 +30,10 @@ public class MyPlayer : Player
             // !!! 임시
             this.ActAnimation(1);
             this.SendActPacket(1);
+
+            int tempDamage = Random.Range(1, 15);
+            SendHpPacket(tempDamage);
+            this.Attacked(tempDamage);
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -82,5 +86,19 @@ public class MyPlayer : Player
         }
 
         _network.Send(actPacket.Write());
+    }
+
+    private void SendHpPacket(int change)
+    {
+        C_PlayerHp hpPacket = new C_PlayerHp();
+
+        hpPacket.change = change;
+
+        if (_network == null)
+        {
+            _network = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+        }
+
+        _network.Send(hpPacket.Write());
     }
 }

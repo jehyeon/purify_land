@@ -34,4 +34,11 @@
 		<int name="playerId" />
 		<int name="actionType" />
 	</packet>
+	<packet name="C_PlayerHp">
+		<int name="change" />
+	</packet>
+	<packet name="S_BroadcastPlayerHp">
+		<int name="playerId" />
+		<int name="change" />
+	</packet>
 </PDL>

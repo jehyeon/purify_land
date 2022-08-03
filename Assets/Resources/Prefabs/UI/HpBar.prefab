@@ -271,6 +271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8252861145332392423}
   - component: {fileID: 8252861145332392418}
+  - component: {fileID: 3023555655246358735}
   m_Layer: 5
   m_Name: HpBar
   m_TagString: Untagged
@@ -287,7 +288,7 @@ RectTransform:
   m_GameObject: {fileID: 8252861145332392422}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children:
   - {fileID: 8252861145357736142}
   m_Father: {fileID: 0}
@@ -296,7 +297,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 40}
+  m_SizeDelta: {x: 200, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8252861145332392418
 CanvasRenderer:
@@ -306,6 +307,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8252861145332392422}
   m_CullTransparentMesh: 1
+--- !u!114 &3023555655246358735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8252861145332392422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a44f75fba1105824f8b29cf907cebf19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 8252861145357736143}
 --- !u!1 &8252861145357736141
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,7 +398,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 8252861144310988596}
   m_FillRect: {fileID: 8252861143589475219}
   m_HandleRect: {fileID: 8252861144310988491}
@@ -392,7 +406,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.612
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

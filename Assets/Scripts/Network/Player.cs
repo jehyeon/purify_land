@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Character
 {
     [Header ("For test")]
     [SerializeField]
@@ -57,7 +57,7 @@ public class Player : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
         }
     }
-    
+
     // -------------------------------------------------------------------------
     // 애니메이션
     // -------------------------------------------------------------------------

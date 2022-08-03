@@ -46,4 +46,12 @@ class PacketHandler
         
         NetworkPlayerManager.Instance.Act(pkt);
     }
+
+    public static void S_BroadcastPlayerHpHandler(PacketSession session, IPacket packet)
+    {
+        S_BroadcastPlayerHp pkt = packet as S_BroadcastPlayerHp;
+        ServerSession serverSession = session as ServerSession;
+
+        NetworkPlayerManager.Instance.Attacked(pkt);
+    }
 }

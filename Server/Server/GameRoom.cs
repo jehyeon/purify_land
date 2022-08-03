@@ -31,6 +31,9 @@ namespace Server
             _pendingList.Add(segment);
         }
 
+        // -------------------------------------------------------------------------
+        // 캐릭터 접속, 종료
+        // -------------------------------------------------------------------------
         public void Enter(ClientSession session)
         {
             // 플레이어 입장
@@ -73,6 +76,9 @@ namespace Server
             Broadcast(leave.Write());
         }
 
+        // -------------------------------------------------------------------------
+        // 이동
+        // -------------------------------------------------------------------------
         public void Move(ClientSession session, C_Move packet)
         {
             // 좌표 이동
@@ -88,6 +94,21 @@ namespace Server
             Broadcast(move.Write());
         }
 
+        // -------------------------------------------------------------------------
+        // 피격
+        // -------------------------------------------------------------------------
+        public void Attacked(ClientSession session, C_PlayerHp packet)
+        {
+            S_BroadcastPlayerHp act = new S_BroadcastPlayerHp();
+            act.playerId = session.SessionId;
+            act.change = packet.change;
+
+            Broadcast(act.Write());
+        }
+
+        // -------------------------------------------------------------------------
+        // 애니메이션 재생
+        // -------------------------------------------------------------------------
         public void Act(ClientSession session, C_Act packet)
         {
             // 다른 플레이어에게 전달

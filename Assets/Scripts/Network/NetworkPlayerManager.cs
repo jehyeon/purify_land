@@ -95,6 +95,18 @@ public class NetworkPlayerManager
     }
 
     // -------------------------------------------------------------------------
+    // 캐릭터 스탯 변경
+    // -------------------------------------------------------------------------  
+    public void Attacked(S_BroadcastPlayerHp packet)
+    {
+        Player player = null;
+        if (_players.TryGetValue(packet.playerId, out player))
+        {
+            player.Attacked(packet.change);
+        }
+    }
+
+    // -------------------------------------------------------------------------
     // 캐릭터 애니메이션 재생
     // -------------------------------------------------------------------------
     public void Act(S_BroadcastAct packet)

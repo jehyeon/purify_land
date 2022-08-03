@@ -49,4 +49,20 @@ class PacketHandler
         GameRoom room = clientSession.Room;
         room.Push(() => room.Act(clientSession, actPacket));
     }
+
+    public static void C_PlayerHpHandler(PacketSession session, IPacket packet)
+    {
+        C_PlayerHp hpPacket = packet as C_PlayerHp;
+        ClientSession clientSession = session as ClientSession;
+
+        if (clientSession.Room == null)
+        {
+            return;
+        }
+
+        // Console.WriteLine($"{movePacket.posX}, {movePacket.posY}");
+
+        GameRoom room = clientSession.Room;
+        room.Push(() => room.Attacked(clientSession, hpPacket));
+    }
 }

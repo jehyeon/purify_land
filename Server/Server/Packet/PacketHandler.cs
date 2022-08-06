@@ -15,6 +15,8 @@ class PacketHandler
             return;
         }
 
+        Console.WriteLine($"{clientSession.SessionId}: 나감");
+
         GameRoom room = clientSession.Room;
         room.Push(() => room.Leave(clientSession));
     }
@@ -28,7 +30,7 @@ class PacketHandler
             return;
         }
 
-        // Console.WriteLine($"{movePacket.posX}, {movePacket.posY}");
+        Console.WriteLine($"{clientSession.SessionId}: 이동 ({movePacket.posX}, {movePacket.posY})");
 
         GameRoom room = clientSession.Room;
         room.Push(() => room.Move(clientSession, movePacket));
@@ -44,7 +46,7 @@ class PacketHandler
             return;
         }
 
-        // Console.WriteLine($"{movePacket.posX}, {movePacket.posY}");
+         Console.WriteLine($"{clientSession.SessionId}: 동작 {actPacket.actionType} (right: {actPacket.right}");
 
         GameRoom room = clientSession.Room;
         room.Push(() => room.Act(clientSession, actPacket));
@@ -60,9 +62,9 @@ class PacketHandler
             return;
         }
 
-        // Console.WriteLine($"{movePacket.posX}, {movePacket.posY}");
+         Console.WriteLine($"{hpPacket.playerId}: {hpPacket.hp}/{hpPacket.maxHp}");
 
         GameRoom room = clientSession.Room;
-        room.Push(() => room.Attacked(clientSession, hpPacket));
+        room.Push(() => room.SyncHp(clientSession, hpPacket));
     }
 }

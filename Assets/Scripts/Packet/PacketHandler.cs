@@ -28,7 +28,7 @@ class PacketHandler
         S_PlayerList pkt = packet as S_PlayerList;
         ServerSession serverSession = session as ServerSession;
 
-        NetworkPlayerManager.Instance.Add(pkt);
+        NetworkPlayerManager.Instance.SyncPlayerList(pkt);
     }
 
     public static void S_BroadcastMoveHandler(PacketSession session, IPacket packet)
@@ -52,6 +52,6 @@ class PacketHandler
         S_BroadcastPlayerHp pkt = packet as S_BroadcastPlayerHp;
         ServerSession serverSession = session as ServerSession;
 
-        NetworkPlayerManager.Instance.Attacked(pkt);
+        NetworkPlayerManager.Instance.SyncHp(pkt);
     }
 }

@@ -4,6 +4,8 @@
 		<int name="playerId" />
 		<float name="posX" />
 		<float name="posY" />
+		<int name="hp" />
+		<int name="maxHp" />
 	</packet>
 	<packet name="C_LeaveGame">
 	</packet>
@@ -16,6 +18,8 @@
 			<int name="playerId" />
 			<float name="posX" />
 			<float name="posY" />
+			<int name="hp" />
+			<int name="maxHp" />
 		</list>
 	</packet>
 	<packet name="C_Move">
@@ -29,16 +33,21 @@
 	</packet>
 	<packet name="C_Act">
 		<int name="actionType" />
+		<bool name="right" />
 	</packet>
 	<packet name="S_BroadcastAct">
 		<int name="playerId" />
 		<int name="actionType" />
+		<bool name="right" />
 	</packet>
 	<packet name="C_PlayerHp">
-		<int name="change" />
+		<int name="playerId" />
+		<int name="hp" />
+		<int name="maxHp" />
 	</packet>
 	<packet name="S_BroadcastPlayerHp">
 		<int name="playerId" />
-		<int name="change" />
+		<int name="hp" />
+		<int name="maxHp" />
 	</packet>
 </PDL>

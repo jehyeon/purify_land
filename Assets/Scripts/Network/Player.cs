@@ -21,8 +21,6 @@ public class Player : Character
     protected void Start()
     {
         this.Animator = GetComponent<PlayerAnimationController>();
-        // _stat = new Stat();
-        // _stat = _stat.SetUnitStat(_unitCode);
     }
 
     protected void Update()
@@ -31,7 +29,7 @@ public class Player : Character
     }
     
     // -------------------------------------------------------------------------
-    // 이동
+    // 이동, 회전
     // -------------------------------------------------------------------------
     private void MoveToPoint()
     {
@@ -47,12 +45,33 @@ public class Player : Character
         // this.MoveVec = 
         this.transform.position += _moveVec * Time.deltaTime * speed;
 
+        Rotate(this._moveVec);
+    }
+
+    protected bool Rotate(Vector3 direct)
+    {
         // 캐릭터 좌우 회전
-        if (_moveVec.x > 0)
+        if (direct.x > 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+
+            return true;
+        }
+        else if (direct.x < 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+
+        return false;
+    }
+
+    public void Rotate(bool right)
+    {
+        if (right)
         {
             transform.localScale = new Vector3(-1, 1, 1);
         }
-        else if (_moveVec.x < 0)
+        else
         {
             transform.localScale = new Vector3(1, 1, 1);
         }

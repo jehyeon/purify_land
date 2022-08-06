@@ -32,6 +32,8 @@ public class S_BroadcastEnterGame : IPacket
 	public int playerId;
 	public float posX;
 	public float posY;
+	public int hp;
+	public int maxHp;
 
 	public ushort Protocol { get { return (ushort)PacketID.S_BroadcastEnterGame; } }
 
@@ -46,6 +48,10 @@ public class S_BroadcastEnterGame : IPacket
 		count += sizeof(float);
 		this.posY = BitConverter.ToSingle(segment.Array, segment.Offset + count);
 		count += sizeof(float);
+		this.hp = BitConverter.ToInt32(segment.Array, segment.Offset + count);
+		count += sizeof(int);
+		this.maxHp = BitConverter.ToInt32(segment.Array, segment.Offset + count);
+		count += sizeof(int);
 	}
 
 	public ArraySegment<byte> Write()
@@ -62,6 +68,10 @@ public class S_BroadcastEnterGame : IPacket
 		count += sizeof(float);
 		Array.Copy(BitConverter.GetBytes(this.posY), 0, segment.Array, segment.Offset + count, sizeof(float));
 		count += sizeof(float);
+		Array.Copy(BitConverter.GetBytes(this.hp), 0, segment.Array, segment.Offset + count, sizeof(int));
+		count += sizeof(int);
+		Array.Copy(BitConverter.GetBytes(this.maxHp), 0, segment.Array, segment.Offset + count, sizeof(int));
+		count += sizeof(int);
 
 		Array.Copy(BitConverter.GetBytes(count), 0, segment.Array, segment.Offset, sizeof(ushort));
 
@@ -139,6 +149,8 @@ public class S_PlayerList : IPacket
 		public int playerId;
 		public float posX;
 		public float posY;
+		public int hp;
+		public int maxHp;
 	
 		public void Read(ArraySegment<byte> segment, ref ushort count)
 		{
@@ -150,6 +162,10 @@ public class S_PlayerList : IPacket
 			count += sizeof(float);
 			this.posY = BitConverter.ToSingle(segment.Array, segment.Offset + count);
 			count += sizeof(float);
+			this.hp = BitConverter.ToInt32(segment.Array, segment.Offset + count);
+			count += sizeof(int);
+			this.maxHp = BitConverter.ToInt32(segment.Array, segment.Offset + count);
+			count += sizeof(int);
 		}
 	
 		public bool Write(ArraySegment<byte> segment, ref ushort count)
@@ -163,6 +179,10 @@ public class S_PlayerList : IPacket
 			count += sizeof(float);
 			Array.Copy(BitConverter.GetBytes(this.posY), 0, segment.Array, segment.Offset + count, sizeof(float));
 			count += sizeof(float);
+			Array.Copy(BitConverter.GetBytes(this.hp), 0, segment.Array, segment.Offset + count, sizeof(int));
+			count += sizeof(int);
+			Array.Copy(BitConverter.GetBytes(this.maxHp), 0, segment.Array, segment.Offset + count, sizeof(int));
+			count += sizeof(int);
 			return success;
 		}	
 	}
@@ -287,6 +307,7 @@ public class S_BroadcastMove : IPacket
 public class C_Act : IPacket
 {
 	public int actionType;
+	public bool right;
 
 	public ushort Protocol { get { return (ushort)PacketID.C_Act; } }
 
@@ -297,6 +318,8 @@ public class C_Act : IPacket
 		count += sizeof(ushort);
 		this.actionType = BitConverter.ToInt32(segment.Array, segment.Offset + count);
 		count += sizeof(int);
+		this.right = BitConverter.ToBoolean(segment.Array, segment.Offset + count);
+		count += sizeof(bool);
 	}
 
 	public ArraySegment<byte> Write()
@@ -309,6 +332,8 @@ public class C_Act : IPacket
 		count += sizeof(ushort);
 		Array.Copy(BitConverter.GetBytes(this.actionType), 0, segment.Array, segment.Offset + count, sizeof(int));
 		count += sizeof(int);
+		Array.Copy(BitConverter.GetBytes(this.right), 0, segment.Array, segment.Offset + count, sizeof(bool));
+		count += sizeof(bool);
 
 		Array.Copy(BitConverter.GetBytes(count), 0, segment.Array, segment.Offset, sizeof(ushort));
 
@@ -320,6 +345,7 @@ public class S_BroadcastAct : IPacket
 {
 	public int playerId;
 	public int actionType;
+	public bool right;
 
 	public ushort Protocol { get { return (ushort)PacketID.S_BroadcastAct; } }
 
@@ -332,6 +358,8 @@ public class S_BroadcastAct : IPacket
 		count += sizeof(int);
 		this.actionType = BitConverter.ToInt32(segment.Array, segment.Offset + count);
 		count += sizeof(int);
+		this.right = BitConverter.ToBoolean(segment.Array, segment.Offset + count);
+		count += sizeof(bool);
 	}
 
 	public ArraySegment<byte> Write()
@@ -346,6 +374,8 @@ public class S_BroadcastAct : IPacket
 		count += sizeof(int);
 		Array.Copy(BitConverter.GetBytes(this.actionType), 0, segment.Array, segment.Offset + count, sizeof(int));
 		count += sizeof(int);
+		Array.Copy(BitConverter.GetBytes(this.right), 0, segment.Array, segment.Offset + count, sizeof(bool));
+		count += sizeof(bool);
 
 		Array.Copy(BitConverter.GetBytes(count), 0, segment.Array, segment.Offset, sizeof(ushort));
 
@@ -355,7 +385,9 @@ public class S_BroadcastAct : IPacket
 
 public class C_PlayerHp : IPacket
 {
-	public int change;
+	public int playerId;
+	public int hp;
+	public int maxHp;
 
 	public ushort Protocol { get { return (ushort)PacketID.C_PlayerHp; } }
 
@@ -364,7 +396,11 @@ public class C_PlayerHp : IPacket
 		ushort count = 0;
 		count += sizeof(ushort);
 		count += sizeof(ushort);
-		this.change = BitConverter.ToInt32(segment.Array, segment.Offset + count);
+		this.playerId = BitConverter.ToInt32(segment.Array, segment.Offset + count);
+		count += sizeof(int);
+		this.hp = BitConverter.ToInt32(segment.Array, segment.Offset + count);
+		count += sizeof(int);
+		this.maxHp = BitConverter.ToInt32(segment.Array, segment.Offset + count);
 		count += sizeof(int);
 	}
 
@@ -376,7 +412,11 @@ public class C_PlayerHp : IPacket
 		count += sizeof(ushort);
 		Array.Copy(BitConverter.GetBytes((ushort)PacketID.C_PlayerHp), 0, segment.Array, segment.Offset + count, sizeof(ushort));
 		count += sizeof(ushort);
-		Array.Copy(BitConverter.GetBytes(this.change), 0, segment.Array, segment.Offset + count, sizeof(int));
+		Array.Copy(BitConverter.GetBytes(this.playerId), 0, segment.Array, segment.Offset + count, sizeof(int));
+		count += sizeof(int);
+		Array.Copy(BitConverter.GetBytes(this.hp), 0, segment.Array, segment.Offset + count, sizeof(int));
+		count += sizeof(int);
+		Array.Copy(BitConverter.GetBytes(this.maxHp), 0, segment.Array, segment.Offset + count, sizeof(int));
 		count += sizeof(int);
 
 		Array.Copy(BitConverter.GetBytes(count), 0, segment.Array, segment.Offset, sizeof(ushort));
@@ -388,7 +428,8 @@ public class C_PlayerHp : IPacket
 public class S_BroadcastPlayerHp : IPacket
 {
 	public int playerId;
-	public int change;
+	public int hp;
+	public int maxHp;
 
 	public ushort Protocol { get { return (ushort)PacketID.S_BroadcastPlayerHp; } }
 
@@ -399,7 +440,9 @@ public class S_BroadcastPlayerHp : IPacket
 		count += sizeof(ushort);
 		this.playerId = BitConverter.ToInt32(segment.Array, segment.Offset + count);
 		count += sizeof(int);
-		this.change = BitConverter.ToInt32(segment.Array, segment.Offset + count);
+		this.hp = BitConverter.ToInt32(segment.Array, segment.Offset + count);
+		count += sizeof(int);
+		this.maxHp = BitConverter.ToInt32(segment.Array, segment.Offset + count);
 		count += sizeof(int);
 	}
 
@@ -413,7 +456,9 @@ public class S_BroadcastPlayerHp : IPacket
 		count += sizeof(ushort);
 		Array.Copy(BitConverter.GetBytes(this.playerId), 0, segment.Array, segment.Offset + count, sizeof(int));
 		count += sizeof(int);
-		Array.Copy(BitConverter.GetBytes(this.change), 0, segment.Array, segment.Offset + count, sizeof(int));
+		Array.Copy(BitConverter.GetBytes(this.hp), 0, segment.Array, segment.Offset + count, sizeof(int));
+		count += sizeof(int);
+		Array.Copy(BitConverter.GetBytes(this.maxHp), 0, segment.Array, segment.Offset + count, sizeof(int));
 		count += sizeof(int);
 
 		Array.Copy(BitConverter.GetBytes(count), 0, segment.Array, segment.Offset, sizeof(ushort));

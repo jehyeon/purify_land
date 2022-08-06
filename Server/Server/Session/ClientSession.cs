@@ -13,7 +13,8 @@ namespace Server
         public GameRoom Room { get; set; }
         public float PosX { get; set; }
         public float PosY { get; set; }
-        public float PosZ { get; set; }
+        public int hp { get; set; }
+        public int maxHp { get; set; }
 
         public override void OnConneteced(EndPoint endPoint)
         {

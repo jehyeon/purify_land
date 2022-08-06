@@ -12,8 +12,9 @@ public class NetworkPlayerManager
     // -------------------------------------------------------------------------
     // 서버 접속, 나가기
     // -------------------------------------------------------------------------
-    public void Add(S_PlayerList packet)
+    public void SyncPlayerList(S_PlayerList packet)
     {
+        // 새로 접속한 유저에게 플레이어 정보 전달
         Object obj = Resources.Load("Prefabs/Player");
 
         foreach (S_PlayerList.Player p in packet.players)
@@ -26,6 +27,9 @@ public class NetworkPlayerManager
                 MyPlayer myPlayer = go.transform.GetChild(0).gameObject.AddComponent<MyPlayer>();
                 myPlayer.PlayerId = p.playerId;
                 myPlayer.transform.position = Vector2.zero;
+                myPlayer.DestinationPos = Vector2.zero;
+                myPlayer.transform.parent.gameObject.name = "MyPlayer";      // !!! temp;
+                myPlayer.SyncHp(100, 100);     // !!! 처음 접속할 경우 최대 체력
                 _myPlayer = myPlayer;
             }
             else
@@ -34,23 +38,30 @@ public class NetworkPlayerManager
                 player.PlayerId = p.playerId;
                 _players.Add(p.playerId, player);
                 player.transform.position = new Vector2(p.posX, p.posY);
+                player.DestinationPos = new Vector2(p.posX, p.posY);
+                player.SyncHp(p.hp, p.maxHp);
             }
         }
     }
 
     public void EnterGame(S_BroadcastEnterGame packet)
     {
+        // 기존 유저에게 새로운 유저 접속 정보를 전달
         if (packet.playerId == _myPlayer.PlayerId)
         {
+            // 자신의 입장 패킷은 무시
             return;
         }
-        
+
         Object obj = Resources.Load("Prefabs/Player");
         GameObject go = Object.Instantiate(obj) as GameObject;
 
         Player player = go.transform.GetChild(0).gameObject.AddComponent<Player>();
+        player.PlayerId = packet.playerId;
         _players.Add(packet.playerId, player);
-        player.transform.position = Vector2.zero;
+        player.transform.position = new Vector2(packet.posX, packet.posY);
+        player.DestinationPos = new Vector2(packet.posX, packet.posY);
+        player.SyncHp(packet.hp, packet.maxHp);
     }
 
     public void LeaveGame(S_BroadcastLeaveGame packet)
@@ -97,12 +108,24 @@ public class NetworkPlayerManager
     // -------------------------------------------------------------------------
     // 캐릭터 스탯 변경
     // -------------------------------------------------------------------------  
-    public void Attacked(S_BroadcastPlayerHp packet)
+    public void SyncHp(S_BroadcastPlayerHp packet)
     {
-        Player player = null;
-        if (_players.TryGetValue(packet.playerId, out player))
+        if (_myPlayer.PlayerId == packet.playerId)
         {
-            player.Attacked(packet.change);
+            _myPlayer.SyncHp(packet.hp, packet.maxHp);
+        }
+        else
+        {
+            Player player = null;
+            if (_players.TryGetValue(packet.playerId, out player))
+            {
+                player.SyncHp(packet.hp, packet.maxHp);
+            }
+            else
+            {
+                Debug.Log(packet.playerId);
+                Debug.Log($"{packet.hp}/{packet.maxHp}");
+            }
         }
     }
 
@@ -117,6 +140,7 @@ public class NetworkPlayerManager
             Player player = null;
             if (_players.TryGetValue(packet.playerId, out player))
             {
+                player.Rotate(packet.right);
                 player.ActAnimation(packet.actionType);
             }
         }

@@ -27,7 +27,7 @@ public class ActionController : MonoBehaviour
     private bool _isKeyboardInput; // 키보드와 마우스 동시 움직임 (미구현)
     private GameObject _targetObject;
     public Stat stat;
-    public UnitCode unitCode;
+    //public UnitCode unitCode;
     public Animator animator;
 
     bool isDeath = false;
@@ -38,7 +38,7 @@ public class ActionController : MonoBehaviour
         _enemyLayerMask = LayerMask.GetMask("Enemy");
         _itemLayerMask = LayerMask.GetMask("Item");
         stat = new Stat();
-        stat = stat.SetUnitStat(unitCode);
+        //stat = stat.SetUnitStat(unitCode);
         playerCollider = GetComponent<Collider2D>();
         animator = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
@@ -65,19 +65,19 @@ public class ActionController : MonoBehaviour
             else if (_h < 0)
                 transform.localScale = new Vector3(1, 1, 1);
 
-            rigid.velocity = moveVec * stat.speed * 2;
+            rigid.velocity = moveVec * stat.Speed * 2;
 
-            hpBar.value = (float)stat.hp / (float)stat.maxHp;
+            hpBar.value = (float)stat.Hp / (float)stat.MaxHp;
             
         }
 
-        if (stat.hp <= 0)
+        if (stat.Hp <= 0)
         {
             rigid.velocity = Vector3.zero;
             rigid.angularVelocity = 0;
             isDeath = true;
-            stat.hp = 0;
-            stat.speed = 0;
+            //stat.Hp = 0;
+            //stat.Speed = 0;
             playerCollider.enabled = false;
 
             animator.SetBool("isDeath", true);
@@ -160,7 +160,7 @@ public class ActionController : MonoBehaviour
                 if (canAttack)
                 {
                     animator.SetTrigger("attack");
-                    _targetObject.GetComponent<EnemyMovement>().TakeDamage(stat.attack);
+                    _targetObject.GetComponent<EnemyMovement>().TakeDamage(stat.Damage);
                     canAttack = false;
                 }
             }

@@ -15,6 +15,6 @@ public class PlayerHpBar : MonoBehaviour
     
     void Update()
     {
-        bar.value = (float)pStat.hp / pStat.maxHp;
+        bar.value = (float)pStat.Hp / pStat.MaxHp;
     }
 }

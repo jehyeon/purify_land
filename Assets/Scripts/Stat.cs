@@ -1,53 +1,123 @@
-public enum UnitCode
-{
-    Player,
-    WoodBlock,
-    Monster
-}
+ï»¿using System.Collections.Generic;
+using UnityEngine;
 
 public class Stat
 {
-    // ¸â¹ö ÇÁ·ÎÆÛÆ¼
-    public UnitCode unitCode { get; }
-    public string name { get; set; }
-    public int hp { get; set; }
-    public int maxHp { get; set; }
-    public int attack { get; set; }
-    public int defense { get; set; }
-    public float speed { get; set; }
+    // ê³µê²©
+    public int Damage { get; private set; }
+    public float AttackSpeed { get; private set; }
+    public float CriticalPercent { get; private set; }
+    // ë°©ì–´
+    public int Defense { get; private set; }
+    public int Hp { get; private set; }
+    public int MaxHp { get; private set; }
+    public int RecoverHp { get; private set; }
+    // ê¸°íƒ€
+    public float Speed { get; private set; }
 
-    public Stat()
+    // -------------------------------------------------------------------------
+    // ì´ˆê¸°í™”
+    // -------------------------------------------------------------------------
+    public Stat(bool empty = false)
     {
-    }
-
-    public Stat(UnitCode unitCode, string name, int hp, int maxHp, int attack, int defense, float speed)
-    {
-        this.unitCode = unitCode;
-        this.name = name;
-        this.hp = hp;
-        this.maxHp = maxHp;
-        this.attack = attack;
-        this.defense = defense;
-        this.speed = speed;
-    }
-
-    public Stat SetUnitStat(UnitCode unitCode)
-    {
-        Stat stat = null;
-
-        switch (unitCode)
+        if (!empty)
         {
-            case UnitCode.Player:
-                stat = new Stat(unitCode, "ÇÃ·¹ÀÌ¾î", 100, 100, 10, 10, 7);
-                break;
-            case UnitCode.Monster:
-                stat = new Stat(unitCode, "Á»ºñ", 30, 30, 5, 0, 5);
-                break;
-            case UnitCode.WoodBlock:
-                stat = new Stat(unitCode, "³ª¹«ºí·Ï", 4, 4, 0, 65535, 0f);
-                break;
+            this.Damage = 0;
+            this.AttackSpeed = 1f;
+            this.CriticalPercent = 0f;
+            this.Defense = 0;
+            this.Hp = 100;
+            this.MaxHp = 100;
+            this.RecoverHp = 5;
+            this.Speed = 1f;
+        }
+        else
+        {
+            this.Damage = 0;
+            this.AttackSpeed = 0f;
+            this.CriticalPercent = 0f;
+            this.Defense = 0;
+            this.Hp = 0;
+            this.MaxHp = 0;
+            this.RecoverHp = 0;
+            this.Speed = 0f;
+        }
+    }
+
+    public void SyncStat(List<Stat> stats)
+    {
+        // ìž¥ì°©í•œ ì•„ì´í…œìœ¼ë¡œ í˜„ìž¬ ìŠ¤íƒ¯ ì—…ë°ì´íŠ¸
+        foreach (Stat stat in stats)
+        {
+            this.Damage += stat.Damage;
+            this.AttackSpeed += stat.AttackSpeed;
+            this.CriticalPercent += stat.CriticalPercent;
+            this.Defense += stat.Defense;
+            this.Hp += stat.Hp;
+            this.MaxHp += stat.MaxHp;
+            this.RecoverHp += stat.RecoverHp;
+            this.Speed += stat.Speed;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Stat ìˆ˜ì • (ì²´ë ¥ë§Œ)
+    // -------------------------------------------------------------------------
+    public void SyncHp(int hp, int maxHp)
+    {
+        this.Hp = hp;
+        this.MaxHp = maxHp;
+    }
+
+    public int Attacked(int damage)
+    {
+        int realDamage = damage - this.Defense > 0
+            ? damage - this.Defense
+            : 0;
+
+        this.Hp -= realDamage;
+
+        if (this.Hp < 0)
+        {
+            this.Hp = 0;
         }
 
-        return stat;
+        return realDamage;
+    }
+
+    public void Recover()
+    {
+        this.Hp += this.RecoverHp;
+
+        if (this.Hp > this.MaxHp)
+        {
+            this.Hp = this.MaxHp;
+        }
+    }
+
+    public void Recover(int amount)
+    {
+        this.Hp += amount;
+
+        if (this.Hp > this.MaxHp)
+        {
+            this.Hp = this.MaxHp;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // ë°ë¯¸ì§€ ê³„ì‚°
+    // -------------------------------------------------------------------------
+
+    public int ComputeDamage()
+    {
+        if (Random.value > this.CriticalPercent)
+        {
+            return Random.Range((int)(this.Damage * 0.75f), (int)(this.Damage * 1.25f));
+        }
+        else
+        {
+            return (int)(this.Damage * 1.25f);
+        }
     }
 }

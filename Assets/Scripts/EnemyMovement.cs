@@ -11,8 +11,8 @@ public class EnemyMovement : MonoBehaviour
     Detector detector;
     Spawner spawner;
 
-    [SerializeField]
-    UnitCode unitcode;
+    //[SerializeField]
+    //UnitCode unitcode;
 
     Transform backMap;
     Collider2D collider;
@@ -47,7 +47,7 @@ public class EnemyMovement : MonoBehaviour
         index = spawner.Idx - 1;
         moveSpeed = speeds[index];
         stat = new Stat();
-        stat = stat.SetUnitStat(unitcode);
+        //stat = stat.SetUnitStat(unitcode);
     }
 
     void Update()
@@ -83,9 +83,9 @@ public class EnemyMovement : MonoBehaviour
             }
         }
 
-        if(stat.hp <= 0)
+        if(stat.Hp <= 0)
         {
-            stat.hp = 0;
+            //stat.hp = 0;
             moveSpeed = 0;
             collider.enabled = false;
 
@@ -102,7 +102,7 @@ public class EnemyMovement : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        stat.hp -= damage;
+        //stat.hp -= damage;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -116,7 +116,7 @@ public class EnemyMovement : MonoBehaviour
         {
             if (time > 1)
             {
-                player.stat.hp -= stat.attack;
+                //player.stat.hp -= stat.attack;
                 time = 0;
             }
         }

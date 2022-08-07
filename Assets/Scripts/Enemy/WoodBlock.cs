@@ -8,7 +8,7 @@ public class WoodBlock : MonoBehaviour
 {
     private Rigidbody2D rigid;
     public Stat stat;
-    public UnitCode unitCode;
+    //public UnitCode unitCode;
 
     // temp
     [SerializeField]
@@ -21,7 +21,7 @@ public class WoodBlock : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         stat = new Stat();
-        stat = stat.SetUnitStat(unitCode);
+        //stat = stat.SetUnitStat(unitCode);
     }
 
     private void Update()
@@ -35,16 +35,16 @@ public class WoodBlock : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        int realDamage = damage - stat.defense <= 0 
-            ? 1 
-            : damage - stat.defense;
-        stat.hp -= realDamage;
+        //int realDamage = damage - stat.defense <= 0 
+        //    ? 1 
+        //    : damage - stat.defense;
+        //stat.hp -= realDamage;
 
-        if (stat.hp <= 0)
-        {
-            Destroy(hpBarObject);
-            Destroy(this.gameObject);
-        }
+        //if (stat.hp <= 0)
+        //{
+        //    Destroy(hpBarObject);
+        //    Destroy(this.gameObject);
+        //}
 
         UpdateHpBar();
     }

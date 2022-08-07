@@ -27,6 +27,6 @@ public class EnemyHpBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _hpBar.value = (float) parentWoodBlock.stat.hp / parentWoodBlock.stat.maxHp;
+        _hpBar.value = (float) parentWoodBlock.stat.Hp / parentWoodBlock.stat.MaxHp;
     }
 }

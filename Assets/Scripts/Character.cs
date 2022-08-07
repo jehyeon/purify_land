@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    public Stat _stat = new Stat();
+    public Stat Stat = new Stat();
     private HpBar myHpBar = null;
 
     // -------------------------------------------------------------------------
@@ -19,29 +19,17 @@ public class Character : MonoBehaviour
     
     public void SyncHp(int hp, int maxHp)
     {
-        // !!! _stat.maxHp와 maxHp가 잘못될 경우
-        _stat.hp = hp;
-        _stat.maxHp = maxHp;
+        this.Stat.SyncHp(hp, maxHp);
 
-        if (_stat.hp < 0)
-        {
-            _stat.hp = 0;
-        }
-
-        UpdateHpBar((float)_stat.hp / (float)_stat.maxHp);
+        UpdateHpBar((float)this.Stat.Hp / (float)this.Stat.MaxHp);
     }
 
     public int[] TakeDamage(int damage)
     {
         // 받은 데미지만큼 hp, maxHp 업데이트 후 return
-        _stat.hp -= damage;
+        this.Stat.Attacked(damage);
 
-        if (_stat.hp < 0)
-        {
-            _stat.hp = 0;
-        }
-
-        return new int[] { _stat.hp, _stat.maxHp };
+        return new int[] { this.Stat.Hp, this.Stat.MaxHp };
     }
 
     private void UpdateHpBar(float percent)

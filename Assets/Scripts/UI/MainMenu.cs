@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -9,8 +9,31 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     private GameObject goMainMenu;
     [SerializeField]
-    private GameObject goLobby;
+    private GameObject goEnter;
 
+    [Header ("Enter")]
+    [SerializeField]
+    private InputField inputFieldIP;
+
+    // -------------------------------------------------------------------------
+    // 게임 접속
+    // -------------------------------------------------------------------------
+    private void EnterGame()
+    {
+        GameManager.Instance.GameScene();
+    }
+
+    public void CheckValidServer()
+    {
+        // !!! valid ip 주소인지
+        // !!! 서버가 열려있는지 확인
+
+        EnterGame();
+    }
+
+    // -------------------------------------------------------------------------
+    // UI 조작
+    // -------------------------------------------------------------------------
     public void OpenMainMenu()
     {
         Close();
@@ -22,20 +45,20 @@ public class MainMenu : MonoBehaviour
         goMainMenu.SetActive(false);
     }
 
-    public void OpenLobby()
+    public void OpenEnter()
     {
         Close();
-        goLobby.SetActive(true);
+        goEnter.SetActive(true);
     }
 
-    public void CloseLobby()
+    public void CloseEnter()
     {
-        goLobby.SetActive(false);
+        goEnter.SetActive(false);
     }
 
     public void Close()
     {
         CloseMainMenu();
-        CloseLobby();
+        CloseEnter();
     }
 }

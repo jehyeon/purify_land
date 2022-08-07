@@ -5,7 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private MainMenu mainMenu;
+    private static GameManager instance = null;
+    public static GameManager Instance { get { return instance; } }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     // Scene 관리
     public void MainScene()
@@ -15,6 +29,16 @@ public class GameManager : MonoBehaviour
 
     public void GameScene()
     {
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("ServerTest");
+    }
+
+    public void ExitGame()
+    {
+        // 게임 종료
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }

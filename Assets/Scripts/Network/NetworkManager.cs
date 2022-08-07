@@ -1,10 +1,10 @@
-using DummyClient;
-using ServerCore;
 using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Net;
 using UnityEngine;
+using Client;
+using ServerCore;
 
 public class NetworkManager : MonoBehaviour
 {

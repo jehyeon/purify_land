@@ -1,4 +1,4 @@
-﻿using DummyClient;
+﻿using Client;
 using ServerCore;
 using System;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ class PacketHandler
         S_PlayerList pkt = packet as S_PlayerList;
         ServerSession serverSession = session as ServerSession;
 
-        NetworkPlayerManager.Instance.Add(pkt);
+        NetworkPlayerManager.Instance.SyncPlayerList(pkt);
     }
 
     public static void S_BroadcastMoveHandler(PacketSession session, IPacket packet)
@@ -37,5 +37,21 @@ class PacketHandler
         ServerSession serverSession = session as ServerSession;
         
         NetworkPlayerManager.Instance.Move(pkt);
+    }
+    
+    public static void S_BroadcastActHandler(PacketSession session, IPacket packet)
+    {
+        S_BroadcastAct pkt = packet as S_BroadcastAct;
+        ServerSession serverSession = session as ServerSession;
+        
+        NetworkPlayerManager.Instance.Act(pkt);
+    }
+
+    public static void S_BroadcastPlayerHpHandler(PacketSession session, IPacket packet)
+    {
+        S_BroadcastPlayerHp pkt = packet as S_BroadcastPlayerHp;
+        ServerSession serverSession = session as ServerSession;
+
+        NetworkPlayerManager.Instance.SyncHp(pkt);
     }
 }

@@ -6,10 +6,14 @@ public class PlayerAnimationController : MonoBehaviour
 {
     private static float _moveAnimationDiff = 0.2f;
     private Animator _animator;
+    public Dictionary<int, System.Action> Animations = new Dictionary<int, System.Action>();
 
     private void Start()
     {
         _animator = GetComponent<Animator>();
+        
+        // Action 정의
+        Animations.Add(1, AttackAnimation);
     }
 
     public void MoveAnimation(float speed)
@@ -21,5 +25,15 @@ public class PlayerAnimationController : MonoBehaviour
     public void IdleAnimation()
     {
         this._animator.SetBool("isMove", false);
+    }
+
+
+    // -------------------------------------------------------------------------
+    // 애니메이션 관리
+    // -------------------------------------------------------------------------
+
+    private void AttackAnimation()
+    {
+        this._animator.SetTrigger("attack");
     }
 }

@@ -1,5 +1,7 @@
 ### vscode setting
 .vsconfig
+### visual studio
+.editorconfig
 ### Rider
 .idea
 ### Unity ###

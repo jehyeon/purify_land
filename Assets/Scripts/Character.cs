@@ -8,15 +8,8 @@ public class Character : MonoBehaviour
     private HpBar myHpBar = null;
 
     // -------------------------------------------------------------------------
-    // 공격, 피격
+    // 체력
     // -------------------------------------------------------------------------
-    //protected void Attack(Character target)
-    //{
-    //    // !!! 임시
-    //    int tempDamage = Random.Range(5, 11);
-    //    target.Attacked(tempDamage);
-    //}
-    
     public void SyncHp(int hp, int maxHp)
     {
         this.Stat.SyncHp(hp, maxHp);
@@ -28,6 +21,11 @@ public class Character : MonoBehaviour
     {
         // 받은 데미지만큼 hp, maxHp 업데이트 후 return
         this.Stat.Attacked(damage);
+
+        if (this.Stat.Hp == 0)
+        {
+            Die();
+        }
 
         return new int[] { this.Stat.Hp, this.Stat.MaxHp };
     }
@@ -42,5 +40,13 @@ public class Character : MonoBehaviour
         }
 
         myHpBar.UpdateHpBar(percent);
+    }
+
+    // -------------------------------------------------------------------------
+    // 사망
+    // -------------------------------------------------------------------------
+    protected virtual void Die()
+    {
+        Debug.Log("재정의 필요");
     }
 }

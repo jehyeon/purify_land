@@ -44,7 +44,7 @@ public class EnemyMovement : MonoBehaviour
         animator.SetFloat("RunState", 0.5f);
         // 스포너의 생성 순서에 따라 속도를 변경.
         spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>();
-        index = spawner.Idx - 1;
+        //index = spawner.Idx - 1;
         moveSpeed = speeds[index];
         stat = new Stat();
         //stat = stat.SetUnitStat(unitcode);

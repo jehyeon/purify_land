@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAnimationController : MonoBehaviour
+public class AnimationController : MonoBehaviour
 {
     private static float _moveAnimationDiff = 0.2f;
     private Animator _animator;

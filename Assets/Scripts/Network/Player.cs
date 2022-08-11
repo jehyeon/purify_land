@@ -16,11 +16,11 @@ public class Player : Character
 
     private Vector3 _moveVec;
 
-    protected PlayerAnimationController Animator { get; private set; }
+    protected AnimationController Animator { get; private set; }
 
     protected void Start()
     {
-        this.Animator = GetComponent<PlayerAnimationController>();
+        this.Animator = GetComponent<AnimationController>();
     }
 
     protected void Update()

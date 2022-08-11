@@ -1,4 +1,4 @@
-﻿using Server;
+using Server;
 using ServerCore;
 using System;
 using System.Collections.Generic;
@@ -66,5 +66,37 @@ class PacketHandler
 
         GameRoom room = clientSession.Room;
         room.Push(() => room.SyncHp(clientSession, hpPacket));
+    }
+
+    public static void C_SpawnCallEnemyHandler(PacketSession session, IPacket packet)
+    {
+        C_SpawnCallEnemy spawnCallPacket = packet as C_SpawnCallEnemy;
+        ClientSession clientSession = session as ClientSession;
+        
+        if (clientSession.Room == null)
+        {
+            return;
+        }
+
+        Console.WriteLine($"{clientSession.SessionId}: {spawnCallPacket.enemyId} Enemy 스폰 요청");
+
+        GameRoom room = clientSession.Room;
+        room.Push(() => room.SpawnCallEnemy(clientSession, spawnCallPacket));
+    }
+
+    public static void C_EnemyMoveHandler(PacketSession session, IPacket packet)
+    {
+        C_EnemyMove enemyMovePacket = packet as C_EnemyMove;
+        ClientSession clientSession = session as ClientSession;
+
+        if (clientSession.Room == null)
+        {
+            return;
+        }
+
+        Console.WriteLine($"Enemy {enemyMovePacket.id}: 이동 ({enemyMovePacket.posX}, {enemyMovePacket.posY})");
+
+        GameRoom room = clientSession.Room;
+        room.Push(() => room.EnemyMove(clientSession, enemyMovePacket));
     }
 }

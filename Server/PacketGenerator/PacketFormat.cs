@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -170,7 +170,7 @@ public class {0} : IPacket
 		return success;
 	}}	
 }}
-public List<{0}> {1}s = new List<{0}>();";
+public List<{0}> {1}List = new List<{0}>();";
 
 		// {0} 변수 이름
 		// {1} To~ 변수 형식
@@ -195,14 +195,14 @@ count += {0}Len;";
 		// {0} 리스트 이름 [대문자]
 		// {1} 리스트 이름 [소문자]
 		public static string readListFormat =
-@"this.{1}s.Clear();
+@"this.{1}List.Clear();
 ushort {1}Len = BitConverter.ToUInt16(segment.Array, segment.Offset + count);
 count += sizeof(ushort);
 for (int i = 0; i < {1}Len; i++)
 {{
 	{0} {1} = new {0}();
 	{1}.Read(segment, ref count);
-	{1}s.Add({1});
+	{1}List.Add({1});
 }}";
 
 		// {0} 변수 이름
@@ -227,9 +227,9 @@ count += {0}Len;";
 		// {0} 리스트 이름 [대문자]
 		// {1} 리스트 이름 [소문자]
 		public static string writeListFormat =
-@"Array.Copy(BitConverter.GetBytes((ushort)this.{1}s.Count), 0, segment.Array, segment.Offset + count, sizeof(ushort));
+@"Array.Copy(BitConverter.GetBytes((ushort)this.{1}List.Count), 0, segment.Array, segment.Offset + count, sizeof(ushort));
 count += sizeof(ushort);
-foreach ({0} {1} in this.{1}s)
+foreach ({0} {1} in this.{1}List)
 	{1}.Write(segment, ref count);";
 
 	}

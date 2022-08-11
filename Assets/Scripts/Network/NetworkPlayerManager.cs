@@ -17,13 +17,20 @@ public class NetworkPlayerManager
         // 새로 접속한 유저에게 플레이어 정보 전달
         Object obj = Resources.Load("Prefabs/Player");
 
-        foreach (S_PlayerList.Player p in packet.players)
+        foreach (S_PlayerList.Player p in packet.playerList)
         {
             GameObject go = Object.Instantiate(obj) as GameObject;
 
             if (p.isSelf)
             {
                 // 자기 자신인 경우
+                if (p.isHost)
+                {
+                    // 호스트인 경우
+                    Object hostManager = Resources.Load("Prefabs/HostManager");
+                    GameObject goHostManager = Object.Instantiate(hostManager) as GameObject;
+                }
+
                 MyPlayer myPlayer = go.transform.GetChild(0).gameObject.AddComponent<MyPlayer>();
                 myPlayer.PlayerId = p.playerId;
                 myPlayer.transform.position = Vector2.zero;

@@ -8,7 +8,9 @@ namespace Server
     {
         public int EnemyId;
         public int Id;
-        public int PosX;
-        public int PosY;
+        public float PosX;
+        public float PosY;
+        public int Hp;
+        public int MaxHp;
     }
 }

@@ -1,4 +1,4 @@
-﻿using Client;
+using Client;
 using ServerCore;
 using System;
 using System.Collections.Generic;
@@ -53,5 +53,29 @@ class PacketHandler
         ServerSession serverSession = session as ServerSession;
 
         NetworkPlayerManager.Instance.SyncHp(pkt);
+    }
+
+    public static void S_EnemyListHandler(PacketSession session, IPacket packet)
+    {
+        S_EnemyList pkt = packet as S_EnemyList;
+        ServerSession serverSession = session as ServerSession;
+
+        NetworkEnemyManager.Instance.EnterGame(pkt);
+    }
+
+    public static void S_BroadcastSpawnEnemyHandler(PacketSession session, IPacket packet)
+    {
+        S_BroadcastSpawnEnemy pkt = packet as S_BroadcastSpawnEnemy;
+        ServerSession serverSession = session as ServerSession;
+
+        NetworkEnemyManager.Instance.Spawn(pkt);
+    }
+
+    public static void S_BroadcastEnemyMoveHandler(PacketSession session, IPacket packet)
+    {
+        S_BroadcastEnemyMove pkt = packet as S_BroadcastEnemyMove;
+        ServerSession serverSession = session as ServerSession;
+
+        NetworkEnemyManager.Instance.Move(pkt);
     }
 }

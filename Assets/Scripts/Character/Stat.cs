@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Stat
@@ -29,7 +29,7 @@ public class Stat
             this.Hp = 100;
             this.MaxHp = 100;
             this.RecoverHp = 5;
-            this.Speed = 1f;
+            this.Speed = 3f;
         }
         else
         {

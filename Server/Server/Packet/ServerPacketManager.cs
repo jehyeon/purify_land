@@ -27,6 +27,10 @@ public class PacketManager
 		_handler.Add((ushort)PacketID.C_Act, PacketHandler.C_ActHandler);
 		_makeFunc.Add((ushort)PacketID.C_PlayerHp, MakePacket<C_PlayerHp>);
 		_handler.Add((ushort)PacketID.C_PlayerHp, PacketHandler.C_PlayerHpHandler);
+		_makeFunc.Add((ushort)PacketID.C_SpawnCallEnemy, MakePacket<C_SpawnCallEnemy>);
+		_handler.Add((ushort)PacketID.C_SpawnCallEnemy, PacketHandler.C_SpawnCallEnemyHandler);
+		_makeFunc.Add((ushort)PacketID.C_EnemyMove, MakePacket<C_EnemyMove>);
+		_handler.Add((ushort)PacketID.C_EnemyMove, PacketHandler.C_EnemyMoveHandler);
 
 	}
 

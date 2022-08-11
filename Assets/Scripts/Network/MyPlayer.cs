@@ -11,7 +11,7 @@ public class MyPlayer : Player
     private AttackRange attackRange;
     private bool isAttacking;
 
-    protected new void Start()
+    protected override void Start()
     {
         base.Start();
         NetworkManager _network = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
@@ -21,7 +21,7 @@ public class MyPlayer : Player
         attackRange.Activate();     // MyPlayer만 공격 범위 활성화
     }
 
-    private new void Update()
+    protected override void Update()
     {
         MouseEvent();
         base.Update();

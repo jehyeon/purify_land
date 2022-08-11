@@ -1,4 +1,4 @@
-﻿using ServerCore;
+using ServerCore;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -11,10 +11,7 @@ namespace Server
     {
         public int SessionId { get; set; }
         public GameRoom Room { get; set; }
-        public float PosX { get; set; }
-        public float PosY { get; set; }
-        public int hp { get; set; }
-        public int maxHp { get; set; }
+        public Player Player { get; set; }
 
         public override void OnConneteced(EndPoint endPoint)
         {

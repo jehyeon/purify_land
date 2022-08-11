@@ -7,11 +7,12 @@ namespace Server
 {
     class GameRoom : IJobQueue
     {
-        //List<ClientSession> _sessions = new List<ClientSession>();
+        private int hostSessionId;
         Dictionary<int, ClientSession> _sessions = new Dictionary<int, ClientSession>();
 
         // Enemy
         Dictionary<int, Enemy> _enemies = new Dictionary<int, Enemy>();
+        private int enemyId = 0;
 
         JobQueue _jobQueue = new JobQueue();
         List<ArraySegment<byte>> _pendingList = new List<ArraySegment<byte>>();
@@ -43,8 +44,17 @@ namespace Server
         {
             // 플레이어 입장
             Console.WriteLine(session.SessionId);
+
+            if (_sessions.Count == 0)
+            {
+                // 처음 입장한 플레이어가 Host
+                // !!! Host 플레이어가 나갔을 때 로직 추가해야 함
+                hostSessionId = session.SessionId;
+                Console.WriteLine("호스트 입장");
+            }
             _sessions.Add(session.SessionId, session);
             session.Room = this;
+            session.Player = new Player();
             session.Player.Hp = 100;    // !!! DB를 통해 정보를 가져와야 함 + 스탯 정보 세분화
             session.Player.MaxHp = 100;
 
@@ -53,8 +63,9 @@ namespace Server
             foreach (int sessionId in _sessions.Keys)
             {
                 ClientSession s = _sessions[sessionId];
-                players.players.Add(new S_PlayerList.Player()
+                players.playerList.Add(new S_PlayerList.Player()
                 {
+                    isHost = (hostSessionId == sessionId),
                     isSelf = (s == session),
                     playerId = s.SessionId,
                     posX = s.Player.PosX,
@@ -63,8 +74,23 @@ namespace Server
                     maxHp = s.Player.MaxHp
                 });
             }
-
             session.Send(players.Write());
+
+            // Enemy List 전달
+            S_EnemyList enemies = new S_EnemyList();
+            foreach (int id in _enemies.Keys)
+            {
+                enemies.enemyList.Add(new S_EnemyList.Enemy()
+                {
+                    enemyId = _enemies[id].EnemyId,
+                    id = _enemies[id].Id,
+                    posX = _enemies[id].PosX,
+                    posY = _enemies[id].PosY,
+                    hp = _enemies[id].Hp,
+                    maxHp = _enemies[id].MaxHp
+                });
+            }
+            session.Send(enemies.Write());
 
             // 기존 플레이어들에게 새로운 플레이어 정보 전달
             S_BroadcastEnterGame enter = new S_BroadcastEnterGame();
@@ -73,7 +99,6 @@ namespace Server
             enter.posY = 0;
             enter.hp = 100;     // !!! DB를 통해 정보를 가져와야 함 + 스탯 정보 세분화
             enter.maxHp = 100;
-
             Broadcast(enter.Write());
         }
 
@@ -133,9 +158,44 @@ namespace Server
         // --------------------------------------------------------------------------
         // Enemy
         // --------------------------------------------------------------------------
-        public void SpawnCallEnemy(ClientSession session, int enemyId)
+        public void SpawnCallEnemy(ClientSession session, C_SpawnCallEnemy packet)
         {
             // 스폰 요청
+            // Enemies에 추가
+            _enemies.Add(++enemyId, new Enemy()
+            {
+                EnemyId = packet.enemyId,
+                Id = enemyId,
+                PosX = packet.posX,
+                PosY = packet.posY,
+                Hp = 100,           // !!! 나중에 DB에서 가져오도록 처리
+                MaxHp = 100
+            });
+
+            S_BroadcastSpawnEnemy spawn = new S_BroadcastSpawnEnemy();
+            spawn.enemyId = _enemies[enemyId].EnemyId;
+            spawn.id = _enemies[enemyId].Id;
+            spawn.posX = _enemies[enemyId].PosX;
+            spawn.posY = _enemies[enemyId].PosY;
+            spawn.hp = _enemies[enemyId].Hp;
+            spawn.maxHp = _enemies[enemyId].MaxHp;
+
+            Broadcast(spawn.Write());
+        }
+
+        public void EnemyMove(ClientSession session, C_EnemyMove packet)
+        {
+            // Enemy 이동
+            _enemies[packet.id].PosX = packet.posX;
+            _enemies[packet.id].PosY = packet.posY;
+
+            // 모든 플레이어에게 전달
+            S_BroadcastEnemyMove enemyMovePacket = new S_BroadcastEnemyMove();
+            enemyMovePacket.id = packet.id;
+            enemyMovePacket.posX = _enemies[packet.id].PosX;
+            enemyMovePacket.posY = _enemies[packet.id].PosY;
+
+            Broadcast(enemyMovePacket.Write());
         }
     }
 }

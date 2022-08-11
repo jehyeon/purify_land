@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <PDL>
 	<packet name="S_BroadcastEnterGame">
 		<int name="playerId" />
@@ -14,6 +14,7 @@
 	</packet>
 	<packet name="S_PlayerList">
 		<list name="player">
+			<bool name="isHost" />
 			<bool name="isSelf" />
 			<int name="playerId" />
 			<float name="posX" />
@@ -49,5 +50,39 @@
 		<int name="playerId" />
 		<int name="hp" />
 		<int name="maxHp" />
+	</packet>
+
+	<packet name="S_EnemyList">
+		<list name="enemy">
+			<int name="enemyId" />
+			<int name="id" />
+			<float name="posX" />
+			<float name="posY" />
+			<int name="hp" />
+			<int name="maxHp" />
+		</list>
+	</packet>
+	<packet name="C_SpawnCallEnemy">
+		<int name="enemyId" />
+		<float name="posX" />
+		<float name="posY" />
+	</packet>
+	<packet name="S_BroadcastSpawnEnemy">
+		<int name="enemyId" />
+		<int name="id" />
+		<float name="posX" />
+		<float name="posY" />
+		<int name="hp" />
+		<int name="maxHp" />
+	</packet>
+	<packet name="C_EnemyMove">
+		<int name="id" />
+		<float name="posX" />
+		<float name="posY" />
+	</packet>
+	<packet name="S_BroadcastEnemyMove">
+		<int name="id" />
+		<float name="posX" />
+		<float name="posY" />
 	</packet>
 </PDL>

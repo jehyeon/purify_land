@@ -51,36 +51,57 @@ public class NetworkEnemyManager
 
     public void Move(S_BroadcastEnemyMove packet)
     {
-        Enemy enemy = null;
-        if (_enemies.TryGetValue(packet.id, out enemy))
+        if (!IsHost)
         {
-            enemy.DestinationPos = new Vector3(packet.posX, packet.posY, 0f);
+            Enemy enemy = null;
+            if (_enemies.TryGetValue(packet.id, out enemy))
+            {
+                enemy.DestinationPos = new Vector3(packet.posX, packet.posY, 0f);
+            }
         }
     }
 
     public void Target(S_BroadcastEnemyTarget packet)
     {
-        Enemy enemy = null;
-        if (_enemies.TryGetValue(packet.id, out enemy))
+        if (!IsHost)
         {
-            Player target = null;
-            if (NetworkPlayerManager.Instance.Players.TryGetValue(packet.playerId, out target))
+            Enemy enemy = null;
+            if (_enemies.TryGetValue(packet.id, out enemy))
             {
-                enemy.SetTarget(target);
-            }
-            else
-            {
-                Debug.Log("플레이어를 못찾음");
+                Player target = null;
+                if (NetworkPlayerManager.Instance.Players.TryGetValue(packet.playerId, out target))
+                {
+                    enemy.SetTarget(target);
+                }
+                else
+                {
+                    Debug.Log("플레이어를 못찾음");
+                }
             }
         }
     }
 
     public void State(S_BroadcastEnemyState packet)
     {
-        Enemy enemy = null;
-        if (_enemies.TryGetValue(packet.id, out enemy))
+        if (!IsHost)
         {
-            enemy.SetState(packet.state);
+            Enemy enemy = null;
+            if (_enemies.TryGetValue(packet.id, out enemy))
+            {
+                enemy.SetState(packet.state);
+            }
+        }
+    }
+
+    public void Act(S_BroadcastEnemyAct packet)
+    {
+        if (!IsHost)
+        {
+            Enemy enemy = null;
+            if (_enemies.TryGetValue(packet.id, out enemy))
+            {
+                enemy.ActAnimation(packet.actionType);
+            }
         }
     }
 }

@@ -89,15 +89,13 @@ public class MyPlayer : Player
         this.ActAnimation(1);       // 애니메이션 패킷 전송
         this.SendActPacket(1, right);
         yield return new WaitForSeconds(delay * 0.5f);
-        //attackRange.Activate();     // 공격 범위 활성화
-        AttackToCharacter(attackRange.Targets);
+        DamageToTargets(attackRange.Targets);
         yield return new WaitForSeconds(delay * 0.5f);
-        //attackRange.DeActivate();       // 공격 범위 비활성화
         isAttacking = false;            // 공격 중지
         EnableMove();
     }
 
-    private void AttackToCharacter(List<Collider2D> targets)
+    private void DamageToTargets(List<Collider2D> targets)
     {
         int tempDamage = Random.Range(1, 15);
         foreach (Collider2D target in targets)

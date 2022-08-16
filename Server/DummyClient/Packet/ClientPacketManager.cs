@@ -41,6 +41,8 @@ public class PacketManager
 		_handler.Add((ushort)PacketID.S_BroadcastEnemyTarget, PacketHandler.S_BroadcastEnemyTargetHandler);
 		_makeFunc.Add((ushort)PacketID.S_BroadcastEnemyState, MakePacket<S_BroadcastEnemyState>);
 		_handler.Add((ushort)PacketID.S_BroadcastEnemyState, PacketHandler.S_BroadcastEnemyStateHandler);
+		_makeFunc.Add((ushort)PacketID.S_BroadcastEnemyAct, MakePacket<S_BroadcastEnemyAct>);
+		_handler.Add((ushort)PacketID.S_BroadcastEnemyAct, PacketHandler.S_BroadcastEnemyActHandler);
 
 	}
 

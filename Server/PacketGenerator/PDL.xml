@@ -101,4 +101,14 @@
 		<int name="id" />
 		<int name="state" />
 	</packet>
+	<packet name="C_EnemyAct">
+		<int name="id" />
+		<int name="actionType" />
+		<bool name="right" />
+	</packet>
+	<packet name="S_BroadcastEnemyAct">
+		<int name="id" />
+		<int name="actionType" />
+		<bool name="right" />
+	</packet>
 </PDL>

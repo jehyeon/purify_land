@@ -220,5 +220,14 @@ namespace Server
 
             Broadcast(enemyStatePacket.Write());
         }
+
+        public void EnemyAct(ClientSession session, C_EnemyAct packet)
+        {
+            S_BroadcastEnemyAct enemyActPacket = new S_BroadcastEnemyAct();
+            enemyActPacket.id = packet.id;
+            enemyActPacket.actionType = packet.actionType;
+
+            Broadcast(enemyActPacket.Write());
+        }
     }
 }

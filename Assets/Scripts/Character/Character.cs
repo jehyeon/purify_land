@@ -80,7 +80,7 @@ public class Character : MonoBehaviour
         Rotate(this._moveVec);
     }
 
-    protected bool Rotate(Vector3 direct)
+    public bool Rotate(Vector3 direct)
     {
         // 캐릭터 좌우 회전
         if (direct.x > 0)

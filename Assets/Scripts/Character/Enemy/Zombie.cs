@@ -9,6 +9,6 @@ public class Zombie : Enemy
         base.Start();
         // !!! TEMP
         _backRange = 10f;
-        _attackRange = .75f;
+        _attackRange = .5f;
     }
 }

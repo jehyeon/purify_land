@@ -23,6 +23,7 @@ public abstract class Enemy : Character
     public State State { get; set; }
 
     public float BackRange { get { return _backRange; } }
+    public float AttackRange { get { return _attackRange; } }
 
     protected override void Update()
     {
@@ -36,7 +37,7 @@ public abstract class Enemy : Character
     }
 
     // -------------------------------------------------------------------------
-    // Target
+    // Target, State
     // -------------------------------------------------------------------------
     public void SetTarget(Player target)
     {
@@ -44,9 +45,6 @@ public abstract class Enemy : Character
         this.Target = target;
     }
 
-    // -------------------------------------------------------------------------
-    // State
-    // -------------------------------------------------------------------------
     public void SetState(int state)
     {
         switch ((State)state)
@@ -59,6 +57,9 @@ public abstract class Enemy : Character
                 break;
             case State.Detect:
                 DetectMode();
+                break;
+            case State.Attack:
+                AttackMode();
                 break;
         }
     }
@@ -75,6 +76,9 @@ public abstract class Enemy : Character
                 break;
             case State.Detect:
                 DetectMode();
+                break;
+            case State.Attack:
+                AttackMode();
                 break;
         }
     }
@@ -96,10 +100,11 @@ public abstract class Enemy : Character
         this.State = State.Detect;
     }
 
-    //private void AttackMode()
-    //{
-    //    _enemy.State = State.Attack;
-    //}
+    private void AttackMode()
+    {
+        this.State = State.Attack;
+        this.DestinationPos = this.transform.position;
+    }
 
     // -------------------------------------------------------------------------
     // Set

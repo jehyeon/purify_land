@@ -131,4 +131,20 @@ class PacketHandler
         GameRoom room = clientSession.Room;
         room.Push(() => room.EnemyState(clientSession, enemyStatePacket));
     }
+
+    public static void C_EnemyActHandler(PacketSession session, IPacket packet)
+    {
+        C_EnemyAct enemyActPacket = packet as C_EnemyAct;
+        ClientSession clientSession = session as ClientSession;
+
+        if (clientSession.Room == null)
+        {
+            return;
+        }
+
+        Console.WriteLine($"Enemy {enemyActPacket.id}: Act ({enemyActPacket.actionType})");
+
+        GameRoom room = clientSession.Room;
+        room.Push(() => room.EnemyAct(clientSession, enemyActPacket));
+    }
 }

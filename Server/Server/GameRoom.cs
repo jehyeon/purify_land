@@ -186,6 +186,7 @@ namespace Server
         public void EnemyMove(ClientSession session, C_EnemyMove packet)
         {
             // Enemy 이동
+            // !!! 목적지 패킷이 아니라 현재 위치를 기준으로 전달해야 할듯
             _enemies[packet.id].PosX = packet.posX;
             _enemies[packet.id].PosY = packet.posY;
 
@@ -196,6 +197,28 @@ namespace Server
             enemyMovePacket.posY = _enemies[packet.id].PosY;
 
             Broadcast(enemyMovePacket.Write());
+        }
+
+        public void EnemyTarget(ClientSession session, C_EnemyTarget packet)
+        {
+            _enemies[packet.id].TargetPlayerId = packet.playerId;
+
+            S_BroadcastEnemyTarget enemyTargetPacket = new S_BroadcastEnemyTarget();
+            enemyTargetPacket.id = packet.id;
+            enemyTargetPacket.playerId = _enemies[packet.id].TargetPlayerId;
+
+            Broadcast(enemyTargetPacket.Write());
+        }
+
+        public void EnemyState(ClientSession session, C_EnemyState packet)
+        {
+            _enemies[packet.id].State = packet.state;
+
+            S_BroadcastEnemyState enemyStatePacket = new S_BroadcastEnemyState();
+            enemyStatePacket.id = packet.id;
+            enemyStatePacket.state = _enemies[packet.id].State;
+
+            Broadcast(enemyStatePacket.Write());
         }
     }
 }

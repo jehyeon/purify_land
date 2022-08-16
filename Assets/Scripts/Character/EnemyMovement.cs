@@ -62,26 +62,26 @@ public class EnemyMovement : MonoBehaviour
         float moveY = backMap.transform.localScale.y / 2;
 
         // 플레이어 감지 부분
-        if (detector.IsDetected)
-        {
-            movePoint = player.transform.position;
-            MoveToPos(movePoint);
-        }
+        //if (detector.IsDetected)
+        //{
+        //    movePoint = player.transform.position;
+        //    MoveToPos(movePoint);
+        //}
 
-        else
-        {
-            if (Vector3.Distance(transform.position, movePoint) > 0.1f)
-                MoveToPos(movePoint);
-            // 플레이어를 감지하지 못했을 경우, 다음 MovePoint로 이동.
-            else
-            {
-                // 생성위치 주변에서 배회.
-                float maxMoveX = spawnPoint.x + 5;
-                float maxMoveY = spawnPoint.y + 3;
-                movePoint = new Vector3(Random.Range(-maxMoveX, maxMoveX), Random.Range(-maxMoveY, maxMoveY));
-                //movePoint = new Vector3(Random.Range(-moveX, moveX), Random.Range(-moveY, moveY));
-            }
-        }
+        //else
+        //{
+        //    if (Vector3.Distance(transform.position, movePoint) > 0.1f)
+        //        MoveToPos(movePoint);
+        //    // 플레이어를 감지하지 못했을 경우, 다음 MovePoint로 이동.
+        //    else
+        //    {
+        //        // 생성위치 주변에서 배회.
+        //        float maxMoveX = spawnPoint.x + 5;
+        //        float maxMoveY = spawnPoint.y + 3;
+        //        movePoint = new Vector3(Random.Range(-maxMoveX, maxMoveX), Random.Range(-maxMoveY, maxMoveY));
+        //        //movePoint = new Vector3(Random.Range(-moveX, moveX), Random.Range(-moveY, moveY));
+        //    }
+        //}
 
         if(stat.Hp <= 0)
         {

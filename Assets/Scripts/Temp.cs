@@ -12,8 +12,7 @@ public class Temp : MonoBehaviour
         Zombie b = temp.GetComponent<Zombie>();
         Enemy a = temp.GetComponent<Enemy>();
 
-        Debug.Log(b);
-        Debug.Log(a);
+        b.Reset();
     }
 
     // Update is called once per frame

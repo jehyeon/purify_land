@@ -85,4 +85,20 @@
 		<float name="posX" />
 		<float name="posY" />
 	</packet>
+	<packet name="C_EnemyTarget">
+		<int name="id" />
+		<int name="playerId" />
+	</packet>
+	<packet name="S_BroadcastEnemyTarget">
+		<int name="id" />
+		<int name="playerId" />
+	</packet>
+	<packet name="C_EnemyState">
+		<int name="id" />
+		<int name="state" />
+	</packet>
+	<packet name="S_BroadcastEnemyState">
+		<int name="id" />
+		<int name="state" />
+	</packet>
 </PDL>

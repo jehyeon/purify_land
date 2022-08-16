@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class NetworkEnemyManager
 {
+    public bool IsHost { get; set; } = false;
     Dictionary<int, Enemy> _enemies = new Dictionary<int, Enemy>();
-
     public static NetworkEnemyManager Instance { get; } = new NetworkEnemyManager();
 
     public void EnterGame(S_EnemyList packet)
@@ -29,6 +29,19 @@ public class NetworkEnemyManager
         // !!! packet.enemyList[i].enemyId에 따른 처리는 나중에
         GameObject goEnemy = EnemyManager.Instance.Get();        // !!! zombie로 고정
         Enemy enemy = goEnemy.transform.GetChild(0).GetComponent<Enemy>() as Enemy;
+        if (IsHost)
+        {
+            // 호스트인 경우
+            // Detector 추가
+            Object obj = Resources.Load("Prefabs/Detector");
+            GameObject goDetector = Object.Instantiate(obj) as GameObject;
+            goDetector.transform.SetParent(enemy.transform);
+            Detector detector = goDetector.gameObject.GetComponent<Detector>();
+
+            // HostEnemy 컴포넌트 추가
+            HostEnemy hostEnemy = enemy.gameObject.AddComponent<HostEnemy>();
+            hostEnemy.SetDetector(detector);
+        }
 
         Vector3 pos = new Vector3(packet.posX, packet.posY, 0f);
         enemy.Set(packet.id, pos, packet.hp, packet.maxHp);
@@ -41,7 +54,29 @@ public class NetworkEnemyManager
         Enemy enemy = null;
         if (_enemies.TryGetValue(packet.id, out enemy))
         {
+            enemy.DestinationPos = new Vector3(packet.posX, packet.posY, 0f);
+        }
+    }
 
+    public void Target(S_BroadcastEnemyTarget packet)
+    {
+        Enemy enemy = null;
+        if (_enemies.TryGetValue(packet.id, out enemy))
+        {
+            Player target = null;
+            if (NetworkPlayerManager.Instance.Players.TryGetValue(packet.playerId, out target))
+            {
+                enemy.SetTarget(target);
+            }
+        }
+    }
+
+    public void State(S_BroadcastEnemyState packet)
+    {
+        Enemy enemy = null;
+        if (_enemies.TryGetValue(packet.id, out enemy))
+        {
+            enemy.SetState(packet.state);
         }
     }
 }

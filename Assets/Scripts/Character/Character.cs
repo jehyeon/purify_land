@@ -64,7 +64,7 @@ public class Character : MonoBehaviour
     // -------------------------------------------------------------------------
     // 이동, 회전
     // -------------------------------------------------------------------------
-    private void MoveToPoint()
+    protected void MoveToPoint()
     {
         if ((DestinationPos - this.transform.position).sqrMagnitude < 0.01f)
         // if (this.MoveVec == Vector3.zero)

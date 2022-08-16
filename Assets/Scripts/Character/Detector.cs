@@ -4,26 +4,18 @@ using UnityEngine;
 
 public class Detector : MonoBehaviour
 {
-    private bool isDetected = false;
+    private HostEnemy _parent;
 
-    public bool IsDetected
+    public void SetParent(HostEnemy parent)
     {
-        get { return isDetected; }
+        _parent = parent;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.transform.CompareTag("Player"))
         {
-            isDetected = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.transform.CompareTag("Player"))
-        {
-            isDetected = false;
+            _parent.DetectPlayer(other.GetComponent<Player>());
         }
     }
 }

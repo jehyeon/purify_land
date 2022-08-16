@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class NetworkPlayerManager
 {
-    MyPlayer _myPlayer;
-    Dictionary<int, Player> _players = new Dictionary<int, Player>();
-
     public static NetworkPlayerManager Instance { get; } = new NetworkPlayerManager();
+
+    MyPlayer _myPlayer;
+    private Dictionary<int, Player> _players = new Dictionary<int, Player>();
+    public Dictionary<int, Player> Players { get { return _players; } }
 
     // -------------------------------------------------------------------------
     // 서버 접속, 나가기
@@ -27,6 +28,7 @@ public class NetworkPlayerManager
                 if (p.isHost)
                 {
                     // 호스트인 경우
+                    NetworkEnemyManager.Instance.IsHost = true;
                     Object hostManager = Resources.Load("Prefabs/HostManager");
                     GameObject goHostManager = Object.Instantiate(hostManager) as GameObject;
                 }

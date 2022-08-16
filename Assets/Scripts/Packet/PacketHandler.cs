@@ -78,4 +78,20 @@ class PacketHandler
 
         NetworkEnemyManager.Instance.Move(pkt);
     }
+
+    public static void S_BroadcastEnemyTargetHandler(PacketSession session, IPacket packet)
+    {
+        S_BroadcastEnemyTarget pkt = packet as S_BroadcastEnemyTarget;
+        ServerSession serverSession = session as ServerSession;
+
+        NetworkEnemyManager.Instance.Target(pkt);
+    }
+
+    public static void S_BroadcastEnemyStateHandler(PacketSession session, IPacket packet)
+    {
+        S_BroadcastEnemyState pkt = packet as S_BroadcastEnemyState;
+        ServerSession serverSession = session as ServerSession;
+
+        NetworkEnemyManager.Instance.State(pkt);
+    }
 }

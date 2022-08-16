@@ -12,5 +12,7 @@ namespace Server
         public float PosY;
         public int Hp;
         public int MaxHp;
+        public int TargetPlayerId;
+        public int State;
     }
 }

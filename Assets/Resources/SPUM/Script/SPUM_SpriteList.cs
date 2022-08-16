@@ -141,9 +141,11 @@ public class SPUM_SpriteList : MonoBehaviour
         SyncPath(_weaponList,_weaponListString);
         SyncPath(_backList,_backListString);
     }
-
+    
     public void SyncPath(List<SpriteRenderer> _objList, List<string> _pathList)
     {
+        // _objList = 오브젝트 위치
+        // _pathList = 경로
         for(var i = 0 ; i < _pathList.Count ; i++)
         {
             if(_pathList[i].Length > 1 ) 

@@ -35,6 +35,8 @@ public class NetworkPlayerManager
 
                 MyPlayer myPlayer = go.transform.GetChild(0).gameObject.AddComponent<MyPlayer>();
                 myPlayer.PlayerId = p.playerId;
+                _players.Add(p.playerId, myPlayer as Player);
+
                 myPlayer.transform.position = Vector2.zero;
                 myPlayer.DestinationPos = Vector2.zero;
                 myPlayer.transform.parent.gameObject.name = "MyPlayer";      // !!! temp;
@@ -46,6 +48,7 @@ public class NetworkPlayerManager
                 Player player = go.transform.GetChild(0).gameObject.AddComponent<Player>();
                 player.PlayerId = p.playerId;
                 _players.Add(p.playerId, player);
+
                 player.transform.position = new Vector2(p.posX, p.posY);
                 player.DestinationPos = new Vector2(p.posX, p.posY);
                 player.SyncHp(p.hp, p.maxHp);

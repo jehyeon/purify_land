@@ -43,44 +43,6 @@ public class HostEnemy : MonoBehaviour
                 return;
             }
         }
-        //if ((_startPos - this.transform.position).sqrMagnitude > _startDiff)
-        //{
-        //    // 시작 지점에서 일정 거리 떨어지면 Back 모드
-        //    BackMode();
-        //}
-
-        //if (_state == State.Back)
-        //{
-        //    // Back 모드일 때 처음 위치로 돌아가면 Idle 모드
-        //    if ((_startPos - this.transform.position).sqrMagnitude < 0.02f)
-        //    {
-        //        IdleMode();
-        //    }
-
-        //    return;
-        //}
-
-        ////if (_state == State.Idle)
-        ////{
-        ////    // !!! 배회 (HostEnemy에서 처리해야 할듯)
-        ////}
-
-        //if (_state == State.Detect)
-        //{
-        //    if (_target == null)
-        //    {
-        //        IdleMode();
-        //    }
-
-        //    this.DestinationPos = _target.DestinationPos;
-
-        //    if ((_startPos - this.transform.position).sqrMagnitude < _attackRange)
-        //    {
-
-        //    }
-        //}
-
-
     }
 
     public void SetDetector(Detector detector)
@@ -101,9 +63,7 @@ public class HostEnemy : MonoBehaviour
         }
 
         StopPatrol();
-        //_enemy.DetectMode();
-        _enemy.State = State.Detect;
-        _enemy.Target = target;
+        _enemy.SetTarget(target);
 
         SendTargetPacket(target.PlayerId);
     }
@@ -187,18 +147,4 @@ public class HostEnemy : MonoBehaviour
 
         _network.Send(statePacket.Write());
     }
-
-    //IEnumerator DetectPlayer()
-    //{
-    //    while (true)
-    //    {
-    //        if (_enemy.Target == null)
-    //        {
-    //            IdleMode();
-    //        }
-
-    //        SendMovePacket();
-    //        yield return new WaitForSeconds(0.25f);
-    //    }
-    //}
 }

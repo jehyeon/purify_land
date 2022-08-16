@@ -33,16 +33,21 @@ public class HostManager : MonoBehaviour
 
     private void Update()
     {
-        temp += Time.deltaTime;
-
-        if (temp > 5f)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            temp = 0;
-
             Vector3 tempPos = new Vector3(Random.Range(-5, 5), Random.Range(-5, 5), 0f);
             SendSpawnCallPacket(1, tempPos);
-            Debug.Log("Enemy 스폰");
         }
+        //temp += Time.deltaTime;
+
+        //if (temp > 5f)
+        //{
+        //    temp = 0;
+
+        //    Vector3 tempPos = new Vector3(Random.Range(-5, 5), Random.Range(-5, 5), 0f);
+        //    SendSpawnCallPacket(1, tempPos);
+        //    Debug.Log("Enemy 스폰");
+        //}
     }
 
     // -------------------------------------------------------------------------

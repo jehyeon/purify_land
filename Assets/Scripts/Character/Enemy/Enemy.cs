@@ -40,6 +40,7 @@ public abstract class Enemy : Character
     // -------------------------------------------------------------------------
     public void SetTarget(Player target)
     {
+        this.SetState(State.Detect);
         this.Target = target;
     }
 
@@ -56,6 +57,25 @@ public abstract class Enemy : Character
             case State.Idle:
                 IdleMode();
                 break;
+            case State.Detect:
+                DetectMode();
+                break;
+        }
+    }
+
+    public void SetState(State state)
+    {
+        switch (state)
+        {
+            case State.Back:
+                BackMode();
+                break;
+            case State.Idle:
+                IdleMode();
+                break;
+            case State.Detect:
+                DetectMode();
+                break;
         }
     }
 
@@ -71,10 +91,10 @@ public abstract class Enemy : Character
         this.State = State.Idle;
     }
 
-    //public void DetectMode()
-    //{
-    //    this.State = State.Detect;
-    //}
+    private void DetectMode()
+    {
+        this.State = State.Detect;
+    }
 
     //private void AttackMode()
     //{

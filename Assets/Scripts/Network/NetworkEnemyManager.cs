@@ -15,7 +15,7 @@ public class NetworkEnemyManager
         {
             // !!! packet.enemyList[i].enemyId에 따른 처리는 나중에
             GameObject goEnemy = EnemyManager.Instance.Get();        // !!! zombie로 고정
-            Enemy enemy = goEnemy.GetComponent<Enemy>();
+            Enemy enemy = goEnemy.transform.GetChild(0).GetComponent<Enemy>();
 
             Vector3 pos = new Vector3(packet.enemyList[i].posX, packet.enemyList[i].posY, 0f);
             enemy.Set(packet.enemyList[i].id, pos, packet.enemyList[i].hp, packet.enemyList[i].maxHp);
@@ -67,6 +67,10 @@ public class NetworkEnemyManager
             if (NetworkPlayerManager.Instance.Players.TryGetValue(packet.playerId, out target))
             {
                 enemy.SetTarget(target);
+            }
+            else
+            {
+                Debug.Log("플레이어를 못찾음");
             }
         }
     }

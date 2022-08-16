@@ -11,6 +11,8 @@ public class MyPlayer : Player
     private AttackRange attackRange;
     private bool isAttacking;
 
+    private bool canMove = true;
+
     protected override void Start()
     {
         base.Start();
@@ -54,6 +56,11 @@ public class MyPlayer : Player
 
             if (Physics.Raycast(ray, out hit))
             {
+                if (!canMove)
+                {
+                    return;
+                }
+
                 // 땅 클릭하면 그 위치로 이동
                 if (hit.collider.CompareTag("Ground"))
                 {
@@ -75,6 +82,7 @@ public class MyPlayer : Player
         float delay = 0.52f;
 
         Stop();                     // 공격시 정지
+        DisableMove();
         bool right = Rotate(clickPoint - this.transform.position);   // 공격 방향으로 회전
         isAttacking = true;
 
@@ -86,6 +94,7 @@ public class MyPlayer : Player
         yield return new WaitForSeconds(delay * 0.5f);
         //attackRange.DeActivate();       // 공격 범위 비활성화
         isAttacking = false;            // 공격 중지
+        EnableMove();
     }
 
     private void AttackToCharacter(List<Collider2D> targets)
@@ -111,6 +120,16 @@ public class MyPlayer : Player
     private void Stop()
     {
         Move(this.transform.position);
+    }
+
+    private void EnableMove()
+    {
+        canMove = true;
+    }
+
+    private void DisableMove()
+    {
+        canMove = false;
     }
 
     // -------------------------------------------------------------------------

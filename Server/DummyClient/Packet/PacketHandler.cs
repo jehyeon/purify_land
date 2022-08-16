@@ -1,4 +1,4 @@
-﻿using DummyClient;
+using DummyClient;
 using ServerCore;
 using System;
 using System.Collections.Generic;

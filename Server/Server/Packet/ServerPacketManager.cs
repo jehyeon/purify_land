@@ -37,6 +37,8 @@ public class PacketManager
 		_handler.Add((ushort)PacketID.C_EnemyState, PacketHandler.C_EnemyStateHandler);
 		_makeFunc.Add((ushort)PacketID.C_EnemyAct, MakePacket<C_EnemyAct>);
 		_handler.Add((ushort)PacketID.C_EnemyAct, PacketHandler.C_EnemyActHandler);
+		_makeFunc.Add((ushort)PacketID.C_EnemyHp, MakePacket<C_EnemyHp>);
+		_handler.Add((ushort)PacketID.C_EnemyHp, PacketHandler.C_EnemyHpHandler);
 
 	}
 

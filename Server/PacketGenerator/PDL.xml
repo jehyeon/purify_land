@@ -111,4 +111,14 @@
 		<int name="actionType" />
 		<bool name="right" />
 	</packet>
+	<packet name="C_EnemyHp">
+		<int name="id" />
+		<int name="hp" />
+		<int name="maxHp" />
+	</packet>
+	<packet name="S_BroadcastEnemyHp">
+		<int name="id" />
+		<int name="hp" />
+		<int name="maxHp" />
+	</packet>
 </PDL>

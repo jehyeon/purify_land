@@ -15,7 +15,8 @@ public class AttackRange : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("Enemy"))
+        //if (other.CompareTag("Player") || other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy"))
         {
             _targets.Add(other);
         }
@@ -23,7 +24,8 @@ public class AttackRange : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("Enemy"))
+        //if (other.CompareTag("Player") || other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy"))
         {
             _targets.Remove(other);
         }

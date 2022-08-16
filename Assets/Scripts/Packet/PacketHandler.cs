@@ -102,4 +102,12 @@ class PacketHandler
 
         NetworkEnemyManager.Instance.Act(pkt);
     }
+
+    public static void S_BroadcastEnemyHpHandler(PacketSession session, IPacket packet)
+    {
+        S_BroadcastEnemyHp pkt = packet as S_BroadcastEnemyHp;
+        ServerSession serverSession = session as ServerSession;
+
+        NetworkEnemyManager.Instance.Hp(pkt);
+    }
 }

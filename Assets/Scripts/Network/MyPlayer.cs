@@ -4,9 +4,22 @@ using UnityEngine;
 
 public class MyPlayer : Player
 {
-    private NetworkManager _network;
-    private float _h;
-    private float _v;
+    private NetworkManager _networkManager;
+    private NetworkManager NetworkManager
+    {
+        get
+        {
+            if (_networkManager == null)
+            {
+                _networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+                return _networkManager;
+            }
+            else
+            {
+                return _networkManager;
+            }
+        }
+    }
 
     private AttackRange attackRange;
     private bool isAttacking;
@@ -16,7 +29,6 @@ public class MyPlayer : Player
     protected override void Start()
     {
         base.Start();
-        NetworkManager _network = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
 
         // 공격 범위
         attackRange = this.transform.Find("Attack Range").GetComponent<AttackRange>();
@@ -89,20 +101,26 @@ public class MyPlayer : Player
         this.ActAnimation(1);       // 애니메이션 패킷 전송
         this.SendActPacket(1, right);
         yield return new WaitForSeconds(delay * 0.5f);
-        DamageToTargets(attackRange.Targets);
+        DamageToTargets();
         yield return new WaitForSeconds(delay * 0.5f);
         isAttacking = false;            // 공격 중지
         EnableMove();
     }
 
-    private void DamageToTargets(List<Collider2D> targets)
+    private void DamageToTargets()
     {
         int tempDamage = Random.Range(1, 15);
-        foreach (Collider2D target in targets)
+        foreach (Collider2D target in attackRange.Targets)
         {
-            Player targetPlayer = target.GetComponent<Player>();
-            int[] hpInfo = (targetPlayer as Character).TakeDamage(tempDamage);     // 대상 체력 감소
-            SendHpPacket(targetPlayer.PlayerId, hpInfo);   // 체력 패킷 전송
+            // Player
+            //Player targetPlayer = target.GetComponent<Player>();
+            //int[] hpInfo = (targetPlayer as Character).TakeDamage(tempDamage);     // 대상 체력 감소
+            //SendHpPacket(targetPlayer.PlayerId, hpInfo);   // 체력 패킷 전송
+
+            // Enemy
+            Enemy targetEnemy = target.GetComponent<Enemy>();
+            int[] hpInfo = (targetEnemy as Character).TakeDamage(tempDamage);     // 대상 체력 감소
+            SendEnemyHpPacket(targetEnemy.Id, hpInfo);   // 체력 패킷 전송
         }
     }
 
@@ -140,12 +158,7 @@ public class MyPlayer : Player
         movePacket.posX = this.DestinationPos.x;
         movePacket.posY = this.DestinationPos.y;
 
-        if (_network == null)
-        {
-            _network = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
-        }
-
-        _network.Send(movePacket.Write());
+        NetworkManager.Send(movePacket.Write());
     }
 
     private void SendActPacket(int actionType, bool right)
@@ -155,12 +168,7 @@ public class MyPlayer : Player
         actPacket.actionType = actionType;
         actPacket.right = right;
 
-        if (_network == null)
-        {
-            _network = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
-        }
-
-        _network.Send(actPacket.Write());
+        NetworkManager.Send(actPacket.Write());
     }
 
     private void SendHpPacket(int playerId, int[] hpInfo)
@@ -170,11 +178,16 @@ public class MyPlayer : Player
         hpPacket.hp = hpInfo[0];
         hpPacket.maxHp = hpInfo[1];
 
-        if (_network == null)
-        {
-            _network = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
-        }
+        NetworkManager.Send(hpPacket.Write());
+    }
 
-        _network.Send(hpPacket.Write());
+    private void SendEnemyHpPacket(int enemyId, int[] hpInfo)
+    {
+        C_EnemyHp hpPacket = new C_EnemyHp();
+        hpPacket.id = enemyId;
+        hpPacket.hp = hpInfo[0];
+        hpPacket.maxHp = hpInfo[1];
+
+        NetworkManager.Send(hpPacket.Write());
     }
 }

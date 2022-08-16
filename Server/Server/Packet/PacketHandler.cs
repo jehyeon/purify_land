@@ -147,4 +147,20 @@ class PacketHandler
         GameRoom room = clientSession.Room;
         room.Push(() => room.EnemyAct(clientSession, enemyActPacket));
     }
+
+    public static void C_EnemyHpHandler(PacketSession session, IPacket packet)
+    {
+        C_EnemyHp enemyHpPacket = packet as C_EnemyHp;
+        ClientSession clientSession = session as ClientSession;
+
+        if (clientSession.Room == null)
+        {
+            return;
+        }
+
+        Console.WriteLine($"Enemy {enemyHpPacket.id}: {enemyHpPacket.hp} / {enemyHpPacket.maxHp}");
+
+        GameRoom room = clientSession.Room;
+        room.Push(() => room.EnemyHp(clientSession, enemyHpPacket));
+    }
 }

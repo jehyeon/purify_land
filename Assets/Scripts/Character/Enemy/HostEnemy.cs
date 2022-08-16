@@ -29,10 +29,6 @@ public class HostEnemy : MonoBehaviour
     private float distanceFromStart;
     private float distanceFromTarget;
 
-    private float temp = 0;
-    private float startAttack = 0;
-    private float endAttack = 0;
-
     private void Start()
     {
         _enemy = this.GetComponent<Enemy>();
@@ -40,7 +36,6 @@ public class HostEnemy : MonoBehaviour
 
     private void Update()
     {
-        temp += Time.deltaTime;
         if (isAttacking)
         {
             // 공격 중에는 상태 변화, 이동 없음
@@ -143,7 +138,6 @@ public class HostEnemy : MonoBehaviour
     // -------------------------------------------------------------------------
     IEnumerator AttackToTarget()
     {
-        startAttack = temp;
         // 공격 준비
         float delay = 1f;        // temp (same Player)
         isAttacking = true;
@@ -174,8 +168,6 @@ public class HostEnemy : MonoBehaviour
         // 공격 종료
         isAttacking = false;
         SetSyncState(State.Detect);
-        endAttack = temp;
-        Debug.Log($"공격 딜레이 {endAttack - startAttack}");
     }
 
     private void DamageToTarget()

@@ -104,4 +104,15 @@ public class NetworkEnemyManager
             }
         }
     }
+
+    public void Hp(S_BroadcastEnemyHp packet)
+    {
+        // !!! 체력 전송 패킷이 몰리면 버그가 발생할 수 있음
+        // !!! 입은 데미지로 수정해야할듯
+        Enemy enemy = null;
+        if (_enemies.TryGetValue(packet.id, out enemy))
+        {
+            enemy.SyncHp(packet.hp, packet.maxHp);
+        }
+    }
 }

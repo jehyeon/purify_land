@@ -229,5 +229,17 @@ namespace Server
 
             Broadcast(enemyActPacket.Write());
         }
+
+        public void EnemyHp(ClientSession session, C_EnemyHp packet)
+        {
+            // !!! 체력 전송 패킷이 몰리면 버그가 발생할 수 있음
+            // !!! 입은 데미지로 수정해야할듯
+            S_BroadcastEnemyHp enemyHpPacket = new S_BroadcastEnemyHp();
+            enemyHpPacket.id = packet.id;
+            enemyHpPacket.hp = packet.hp;
+            enemyHpPacket.maxHp = packet.maxHp;
+
+            Broadcast(enemyHpPacket.Write());
+        }
     }
 }

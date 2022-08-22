@@ -9,8 +9,6 @@ using UnityEngine.UI;
 public class ActionController : MonoBehaviour
 {
     [SerializeField]
-    private InventoryUI inventory;
-    [SerializeField]
     private Slider hpBar;
     private Rigidbody2D rigid;
     private float _h;
@@ -165,17 +163,17 @@ public class ActionController : MonoBehaviour
                 }
             }
         }
-        // 스페이스바: 가까운 아이템 획득 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _targetObject = GetNearestObject(1);
-            if (_targetObject is null) return;
-            if (_targetObject.CompareTag("Item"))
-            {
-                inventory.AcquireItem(_targetObject.GetComponent<ItemPickUp>().item);
-                Destroy(_targetObject);
-            }
-        }
+        //// 스페이스바: 가까운 아이템 획득 
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    _targetObject = GetNearestObject(1);
+        //    if (_targetObject is null) return;
+        //    if (_targetObject.CompareTag("Item"))
+        //    {
+        //        inventory.AcquireItem(_targetObject.GetComponent<ItemPickUp>().item);
+        //        Destroy(_targetObject);
+        //    }
+        //}
     }
 
     void SetAttackOn()

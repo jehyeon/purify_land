@@ -6,7 +6,7 @@ public class InventorySlot : Slot
 {
     public int Id { get; private set; }
     
-    public void Load()
+    public void Set()
     {
         // from server
     }

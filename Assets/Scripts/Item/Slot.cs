@@ -5,41 +5,59 @@ using UnityEngine.UI;
 
 public class Slot : MonoBehaviour
 {
+    [SerializeField]
+    private Image itemImage;
+    [SerializeField]
+    private Text itemCount;
+
     public Item Item { get; private set; }
     public int Count { get; private set; }
     
-    // 아이템 이미지 투명도 조절
-    private void SetColor(float _alpha)
+    private void SetColor(float alpha)
     {
-        Color color = itemImage.color;
-        color.a = _alpha;
-        itemImage.color = color;
+        // 아이템 이미지 투명도 조절
+        Color color = Item.Image.color;
+        color.a = alpha;
+        this.Item.Image.color = color;
     }
 
-    // 인벤토리 슬롯에 아이템 추가
-    public void AddItem(Item _item, int _count = 1)
+    public void Set(Item item, int count = 1)
     {
-        item = _item;
-        itemCount = _count;
-        itemImage.sprite = item.itemImage;
+        // 인벤토리 슬롯에 아이템 추가
+        this.Item = item;
+        this.Count = count;
+        this.itemImage = this.Item.Image;
         SetColor(1);
+        UpdateItemCountText();
     }
     
-    // 아이템 갯수 업데이트
-    public void SetSlotCount(int _count)
+    public void UpdateCount(int count)
     {
-        itemCount += _count;
+        // 아이템 갯수 업데이트
+        this.Count += count;
+        UpdateItemCountText();
+
         // 미구현
     }
 
-    // 슬롯의 아이템 삭제
-    private void ClearSlot()
+    private void UpdateItemCountText()
     {
-        item = null;
-        itemCount = 0;
-        itemImage.sprite = null;
-        SetColor(0);
+        if (this.Count == 0)
+        {
+            itemCount.text = "";
+        }
+        else
+        {
+            itemCount.text = $"{this.Count}";
+        }
     }
 
-
+    public void Clear()
+    {
+        // 슬롯의 아이템 삭제
+        this.Item = null;
+        this.Count = 0;
+        SetColor(0);
+        UpdateItemCountText();
+    }
 }

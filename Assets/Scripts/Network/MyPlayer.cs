@@ -81,6 +81,32 @@ public class MyPlayer : Player
                 }
             }
         }
+
+        // !!! TEMP
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (UIManager.Instance.IsActivatedOptionUI)
+            {
+                UIManager.Instance.CloseOptionUI();
+            }
+            else
+            {
+                UIManager.Instance.OpenOptionUI();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            ItemManager.Instance.Get(0);
+            if (UIManager.Instance.IsActivatedInventoryUI)
+            {
+                UIManager.Instance.CloseInventoryUI();
+            }
+            else
+            {
+                UIManager.Instance.OpenInventoryUI();
+            }
+        }
     }
 
     // -------------------------------------------------------------------------

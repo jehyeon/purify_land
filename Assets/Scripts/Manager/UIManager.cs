@@ -4,42 +4,31 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    private static UIManager instance = null;
-    public static UIManager Instance { get { return instance; } }
+    private static UIManager _instance = null;
+    public static UIManager Instance { get { return _instance; } }
 
     [SerializeField]
-    private GameObject goOptionUI;
+    private GameObject _goOptionUI;
 
-    private bool isActivatedOptionUI;
+    public bool IsActivatedOptionUI { get; private set; }
+
+    [SerializeField]
+    private GameObject _goInventoryUI;
+    public bool IsActivatedInventoryUI { get; private set; }
 
     // 체력바 시스템
     [SerializeField]
-    private Transform hpBarParent;
+    private Transform _hpBarParent;
     
     private void Awake()
     {
-        if (instance == null)
+        if (_instance == null)
         {
-            instance = this;
+            _instance = this;
         }
         else
         {
             Destroy(this.gameObject);
-        }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (isActivatedOptionUI)
-            {
-                CloseOptionUI();
-            }
-            else
-            {
-                OpenOptionUI();
-            }
         }
     }
 
@@ -48,9 +37,10 @@ public class UIManager : MonoBehaviour
     // -------------------------------------------------------------------------
     public HpBar CreateHpBar()
     {
+        // !!! 오브젝트 풀링 적용하기
         Object hpBarPref = Resources.Load("Prefabs/UI/HpBar");
         GameObject hpBar = Instantiate(hpBarPref) as GameObject;
-        hpBar.transform.SetParent(hpBarParent);
+        hpBar.transform.SetParent(_hpBarParent);
 
         return hpBar.GetComponent<HpBar>();
     }
@@ -60,18 +50,31 @@ public class UIManager : MonoBehaviour
     // -------------------------------------------------------------------------
     public void OpenOptionUI()
     {
-        isActivatedOptionUI = true;
-        goOptionUI.SetActive(true);
+        this.IsActivatedOptionUI = true;
+        _goOptionUI.SetActive(true);
     }
 
     public void CloseOptionUI()
     {
-        isActivatedOptionUI = false;
-        goOptionUI.SetActive(false);
+        this.IsActivatedOptionUI = false;
+        _goOptionUI.SetActive(false);
+    }
+
+    public void OpenInventoryUI()
+    {
+        this.IsActivatedInventoryUI = true;
+        _goOptionUI.SetActive(true);
+    }
+
+    public void CloseInventoryUI()
+    {
+        this.IsActivatedInventoryUI = false;
+        _goOptionUI.SetActive(false);
     }
 
     public void Close()
     {
         CloseOptionUI();
+        CloseInventoryUI();
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+/*
 [CreateAssetMenu(fileName = "New Item", menuName = "New Item/item")] 
 public class Item : ScriptableObject
 {
@@ -20,4 +20,20 @@ public class Item : ScriptableObject
     public GameObject itemPrefab;
 
     public string weaponType;
+}
+*/
+
+public enum ItemType
+{
+    Equipment,
+    Consumable,
+    Ingredient
+}
+
+public class Item
+{
+    public int Id;
+    public string Name;
+    public ItemType Type;
+    public image Image;
 }

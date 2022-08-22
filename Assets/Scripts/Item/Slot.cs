@@ -5,10 +5,8 @@ using UnityEngine.UI;
 
 public class Slot : MonoBehaviour
 {
-    public Item item;
-    public int itemCount;
-    [SerializeField]
-    private Image itemImage;
+    public Item Item { get; private set; }
+    public int Count { get; private set; }
     
     // 아이템 이미지 투명도 조절
     private void SetColor(float _alpha)

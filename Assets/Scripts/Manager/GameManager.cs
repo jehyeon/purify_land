@@ -41,4 +41,13 @@ public class GameManager : MonoBehaviour
         Application.Quit();
 #endif
     }
+
+    public GameObject CreateGO(string url, Transform transform)
+    {
+        Object obj = Resources.Load(url);
+        GameObject go = Instantiate(obj) as GameObject;
+        go.transform.SetParent(transform);
+
+        return go;
+    }
 }

@@ -7,7 +7,12 @@ using UnityEngine;
 
 class PacketHandler
 {
-    public static void S_BroadcastEnterGameHandler (PacketSession session, IPacket packet)
+    public static void S_ReceiveEnterHandler(PacketSession session, IPacket packet)
+    {
+        GameManager.Instance.Enter();
+    }
+
+    public static void S_BroadcastEnterGameHandler(PacketSession session, IPacket packet)
     {
         S_BroadcastEnterGame pkt = packet as S_BroadcastEnterGame;
         ServerSession serverSession = session as ServerSession;

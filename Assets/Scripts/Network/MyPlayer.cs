@@ -4,23 +4,6 @@ using UnityEngine;
 
 public class MyPlayer : Player
 {
-    private NetworkManager _networkManager;
-    private NetworkManager NetworkManager
-    {
-        get
-        {
-            if (_networkManager == null)
-            {
-                _networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
-                return _networkManager;
-            }
-            else
-            {
-                return _networkManager;
-            }
-        }
-    }
-
     private AttackRange attackRange;
     private bool isAttacking;
 
@@ -158,7 +141,7 @@ public class MyPlayer : Player
         movePacket.posX = this.DestinationPos.x;
         movePacket.posY = this.DestinationPos.y;
 
-        NetworkManager.Send(movePacket.Write());
+        NetworkManager.Instance.Send(movePacket.Write());
     }
 
     private void SendActPacket(int actionType, bool right)
@@ -168,7 +151,7 @@ public class MyPlayer : Player
         actPacket.actionType = actionType;
         actPacket.right = right;
 
-        NetworkManager.Send(actPacket.Write());
+        NetworkManager.Instance.Send(actPacket.Write());
     }
 
     private void SendHpPacket(int playerId, int[] hpInfo)
@@ -178,7 +161,7 @@ public class MyPlayer : Player
         hpPacket.hp = hpInfo[0];
         hpPacket.maxHp = hpInfo[1];
 
-        NetworkManager.Send(hpPacket.Write());
+        NetworkManager.Instance.Send(hpPacket.Write());
     }
 
     private void SendEnemyHpPacket(int enemyId, int[] hpInfo)
@@ -188,6 +171,6 @@ public class MyPlayer : Player
         hpPacket.hp = hpInfo[0];
         hpPacket.maxHp = hpInfo[1];
 
-        NetworkManager.Send(hpPacket.Write());
+        NetworkManager.Instance.Send(hpPacket.Write());
     }
 }

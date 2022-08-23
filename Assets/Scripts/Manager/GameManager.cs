@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     private static GameManager instance = null;
     public static GameManager Instance { get { return instance; } }
 
+    public string Nickname { get; private set; }
+
     private void Awake()
     {
         if (instance == null)
@@ -27,8 +29,9 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Main Menu");
     }
 
-    public void GameScene()
+    public void GameScene(string nickname)
     {
+        this.Nickname = nickname;
         SceneManager.LoadScene("ServerTest");
     }
 
@@ -40,5 +43,14 @@ public class GameManager : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    //
+    public void Enter()
+    {
+        C_EnterGame enter = new C_EnterGame();
+        enter.nickname = Nickname;
+
+        NetworkManager.Instance.Send(enter.Write());
     }
 }

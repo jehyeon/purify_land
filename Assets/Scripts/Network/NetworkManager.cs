@@ -8,11 +8,22 @@ using ServerCore;
 
 public class NetworkManager : MonoBehaviour
 {
+    private static NetworkManager _instance = null;
+    public static NetworkManager Instance { get { return _instance; } }
+
     ServerSession _session = new ServerSession();
-    
-    public void Send(ArraySegment<byte> sendBuff)
+
+    private void Awake()
     {
-        _session.Send(sendBuff);
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     private void Start()
@@ -35,5 +46,10 @@ public class NetworkManager : MonoBehaviour
         {
             PacketManager.Instance.HandlerPacket(_session, packet);
         }
+    }
+
+    public void Send(ArraySegment<byte> sendBuff)
+    {
+        _session.Send(sendBuff);
     }
 }

@@ -9,7 +9,13 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     private GameObject goMainMenu;
     [SerializeField]
+    private GameObject goGameStart;
+    [SerializeField]
     private GameObject goEnter;
+
+    [Header("Game Start")]
+    [SerializeField]
+    private InputField inputFieldNickname;
 
     [Header ("Enter")]
     [SerializeField]
@@ -18,9 +24,10 @@ public class MainMenu : MonoBehaviour
     // -------------------------------------------------------------------------
     // 게임 접속
     // -------------------------------------------------------------------------
-    private void EnterGame()
+    public void EnterGame()
     {
-        GameManager.Instance.GameScene();
+        // !!! TEMP
+        GameManager.Instance.GameScene(inputFieldNickname.text);
     }
 
     public void CheckValidServer()
@@ -28,12 +35,23 @@ public class MainMenu : MonoBehaviour
         // !!! valid ip 주소인지
         // !!! 서버가 열려있는지 확인
 
-        EnterGame();
+        //EnterGame();
     }
 
     // -------------------------------------------------------------------------
     // UI 조작
     // -------------------------------------------------------------------------
+    public void OpenGameStart()
+    {
+        Close();
+        goGameStart.SetActive(true);
+    }
+
+    public void CloseGameStart()
+    {
+        goGameStart.SetActive(false);
+    }
+
     public void OpenMainMenu()
     {
         Close();
@@ -58,6 +76,7 @@ public class MainMenu : MonoBehaviour
 
     public void Close()
     {
+        CloseGameStart();
         CloseMainMenu();
         CloseEnter();
     }

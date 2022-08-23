@@ -1,29 +1,44 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <PDL>
-	<packet name="S_BroadcastEnterGame">
-		<int name="playerId" />
-		<float name="posX" />
-		<float name="posY" />
-		<int name="hp" />
-		<int name="maxHp" />
-	</packet>
-	<packet name="C_LeaveGame">
-	</packet>
-	<packet name="S_BroadcastLeaveGame">
-		<int name="playerId" />
-	</packet>
-	<packet name="S_PlayerList">
-		<list name="player">
-			<bool name="isHost" />
-			<bool name="isSelf" />
-			<int name="playerId" />
-			<float name="posX" />
-			<float name="posY" />
-			<int name="hp" />
-			<int name="maxHp" />
-		</list>
-	</packet>
-	<packet name="C_Move">
+  <!-- 세션 접속 및 닉네임 등록 -->
+  <packet name="S_ReceiveEnter">
+  </packet>
+  <packet name="C_EnterGame">
+    <string name="nickname" />
+  </packet>
+  <packet name="S_BroadcastEnterGame">
+    <int name="playerId" />
+    <string name="nickname" />
+    <float name="posX" />
+    <float name="posY" />
+    <int name="hp" />
+    <int name="maxHp" />
+  </packet>
+  
+  <!-- 접속한 유저 정보 -->
+  <packet name="S_PlayerList">
+    <list name="player">
+      <bool name="isHost" />
+      <bool name="isSelf" />
+      <int name="playerId" />
+      <string name="nickname" />
+      <float name="posX" />
+      <float name="posY" />
+      <int name="hp" />
+      <int name="maxHp" />
+    </list>
+  </packet>
+  
+  <!-- -->
+
+
+  <packet name="C_LeaveGame">
+  </packet>
+  <packet name="S_BroadcastLeaveGame">
+    <int name="playerId" />
+  </packet>
+
+  <packet name="C_Move">
 		<float name="posX" />
 		<float name="posY" />
 	</packet>

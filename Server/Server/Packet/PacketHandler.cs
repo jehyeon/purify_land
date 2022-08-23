@@ -6,6 +6,23 @@ using System.Text;
 
 class PacketHandler
 {
+    public static void C_EnterGameHandler(PacketSession session, IPacket packet)
+    {
+        C_EnterGame enterPacket = packet as C_EnterGame;
+        ClientSession clientSession = session as ClientSession;
+
+        if (clientSession.Room == null)
+        {
+            Console.WriteLine("???");
+            return;
+        }
+
+        Console.WriteLine($"{clientSession.SessionId}: 들어옴");
+
+        GameRoom room = clientSession.Room;
+        room.Push(() => room.Enter(clientSession, enterPacket));
+        //Program.Room.Push(() => Program.Room.Enter(this));
+    }
     public static void C_LeaveGameHandler(PacketSession session, IPacket packet)
     {
         ClientSession clientSession = session as ClientSession;

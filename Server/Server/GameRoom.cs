@@ -40,11 +40,19 @@ namespace Server
         // --------------------------------------------------------------------------
         // Player
         // --------------------------------------------------------------------------
-        public void Enter(ClientSession session)
+        public void EnterSession(ClientSession session)
+        {
+            _sessions.Add(session.SessionId, session);
+            session.Room = this;
+
+            Console.WriteLine("세션 입장");
+            S_ReceiveEnter receive = new S_ReceiveEnter();
+            session.Send(receive.Write());
+        }
+
+        public void Enter(ClientSession session, C_EnterGame packet)
         {
             // 플레이어 입장
-            Console.WriteLine(session.SessionId);
-
             if (_sessions.Count == 0)
             {
                 // 처음 입장한 플레이어가 Host
@@ -52,11 +60,13 @@ namespace Server
                 hostSessionId = session.SessionId;
                 Console.WriteLine("호스트 입장");
             }
-            _sessions.Add(session.SessionId, session);
-            session.Room = this;
+            //_sessions.Add(session.SessionId, session);
+            //session.Room = this;
             session.Player = new Player();
             session.Player.Hp = 100;    // !!! DB를 통해 정보를 가져와야 함 + 스탯 정보 세분화
             session.Player.MaxHp = 100;
+            session.Player.Name = packet.nickname;
+            Console.WriteLine($"{session.Player.Name}");
 
             // 입장한 플레이어에게 플레이어 List 전달
             S_PlayerList players = new S_PlayerList();

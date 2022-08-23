@@ -6,29 +6,31 @@ using ServerCore;
 
 public enum PacketID
 {
-	S_BroadcastEnterGame = 1,
-	C_LeaveGame = 2,
-	S_BroadcastLeaveGame = 3,
-	S_PlayerList = 4,
-	C_Move = 5,
-	S_BroadcastMove = 6,
-	C_Act = 7,
-	S_BroadcastAct = 8,
-	C_PlayerHp = 9,
-	S_BroadcastPlayerHp = 10,
-	S_EnemyList = 11,
-	C_SpawnCallEnemy = 12,
-	S_BroadcastSpawnEnemy = 13,
-	C_EnemyMove = 14,
-	S_BroadcastEnemyMove = 15,
-	C_EnemyTarget = 16,
-	S_BroadcastEnemyTarget = 17,
-	C_EnemyState = 18,
-	S_BroadcastEnemyState = 19,
-	C_EnemyAct = 20,
-	S_BroadcastEnemyAct = 21,
-	C_EnemyHp = 22,
-	S_BroadcastEnemyHp = 23,
+	S_ReceiveEnter = 1,
+	C_EnterGame = 2,
+	S_BroadcastEnterGame = 3,
+	C_LeaveGame = 4,
+	S_BroadcastLeaveGame = 5,
+	S_PlayerList = 6,
+	C_Move = 7,
+	S_BroadcastMove = 8,
+	C_Act = 9,
+	S_BroadcastAct = 10,
+	C_PlayerHp = 11,
+	S_BroadcastPlayerHp = 12,
+	S_EnemyList = 13,
+	C_SpawnCallEnemy = 14,
+	S_BroadcastSpawnEnemy = 15,
+	C_EnemyMove = 16,
+	S_BroadcastEnemyMove = 17,
+	C_EnemyTarget = 18,
+	S_BroadcastEnemyTarget = 19,
+	C_EnemyState = 20,
+	S_BroadcastEnemyState = 21,
+	C_EnemyAct = 22,
+	S_BroadcastEnemyAct = 23,
+	C_EnemyHp = 24,
+	S_BroadcastEnemyHp = 25,
 	
 }
 
@@ -39,6 +41,72 @@ public interface IPacket
 	ArraySegment<byte> Write();
 }
 
+
+public class S_ReceiveEnter : IPacket
+{
+	
+
+	public ushort Protocol { get { return (ushort)PacketID.S_ReceiveEnter; } }
+
+	public void Read(ArraySegment<byte> segment)
+	{
+		ushort count = 0;
+		count += sizeof(ushort);
+		count += sizeof(ushort);
+		
+	}
+
+	public ArraySegment<byte> Write()
+	{
+		ArraySegment<byte> segment = SendBufferHelper.Open(4096);
+		ushort count = 0;
+
+		count += sizeof(ushort);
+		Array.Copy(BitConverter.GetBytes((ushort)PacketID.S_ReceiveEnter), 0, segment.Array, segment.Offset + count, sizeof(ushort));
+		count += sizeof(ushort);
+		
+
+		Array.Copy(BitConverter.GetBytes(count), 0, segment.Array, segment.Offset, sizeof(ushort));
+
+		return SendBufferHelper.Close(count);
+	}
+}
+
+public class C_EnterGame : IPacket
+{
+	public string nickname;
+
+	public ushort Protocol { get { return (ushort)PacketID.C_EnterGame; } }
+
+	public void Read(ArraySegment<byte> segment)
+	{
+		ushort count = 0;
+		count += sizeof(ushort);
+		count += sizeof(ushort);
+		ushort nicknameLen = BitConverter.ToUInt16(segment.Array, segment.Offset + count);
+		count += sizeof(ushort);
+		this.nickname = Encoding.Unicode.GetString(segment.Array, segment.Offset + count, nicknameLen);
+		count += nicknameLen;
+	}
+
+	public ArraySegment<byte> Write()
+	{
+		ArraySegment<byte> segment = SendBufferHelper.Open(4096);
+		ushort count = 0;
+
+		count += sizeof(ushort);
+		Array.Copy(BitConverter.GetBytes((ushort)PacketID.C_EnterGame), 0, segment.Array, segment.Offset + count, sizeof(ushort));
+		count += sizeof(ushort);
+		ushort nicknameLen = (ushort)Encoding.Unicode.GetBytes(this.nickname, 0, this.nickname.Length, segment.Array, segment.Offset + count + sizeof(ushort));
+		Array.Copy(BitConverter.GetBytes(nicknameLen), 0, segment.Array, segment.Offset + count, sizeof(ushort));
+		count += sizeof(ushort);
+		count += nicknameLen;
+
+		Array.Copy(BitConverter.GetBytes(count), 0, segment.Array, segment.Offset, sizeof(ushort));
+
+		return SendBufferHelper.Close(count);
+	}
+}
 
 public class S_BroadcastEnterGame : IPacket
 {

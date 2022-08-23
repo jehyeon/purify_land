@@ -16,12 +16,12 @@ namespace Server
         public override void OnConneteced(EndPoint endPoint)
         {
             Console.WriteLine($"OnConneteced : {endPoint}");
-
-            Program.Room.Push(() => Program.Room.Enter(this));
+            Program.Room.Push(() => Program.Room.EnterSession(this));
         }
 
         public override void OnRecvPacket(ArraySegment<byte> buffer)
         {
+            Console.WriteLine("뭔가 받음");
             PacketManager.Instance.OnRecvPacket(this, buffer);
         }
 

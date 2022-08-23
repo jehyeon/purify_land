@@ -35,6 +35,9 @@ public class Slot : MonoBehaviour
     {
         // 아이템 갯수 업데이트
         this.Count += count;
+        
+        if(this.Count == 0) Clear();
+        
         UpdateItemCountText();
 
         // 미구현

@@ -37,9 +37,9 @@ namespace Server
             _pendingList.Add(segment);
         }
 
-        // --------------------------------------------------------------------------
+        // -------------------------------------------------------------------------
         // Player
-        // --------------------------------------------------------------------------
+        // -------------------------------------------------------------------------
         public void EnterSession(ClientSession session)
         {
             _sessions.Add(session.SessionId, session);
@@ -62,9 +62,9 @@ namespace Server
             }
             //_sessions.Add(session.SessionId, session);
             //session.Room = this;
-            session.Player = new Player();
-            session.Player.Hp = 100;    // !!! DB를 통해 정보를 가져와야 함 + 스탯 정보 세분화
-            session.Player.MaxHp = 100;
+            //session.Player = new Player();
+            //session.Player.Hp = 100;    // !!! DB를 통해 정보를 가져와야 함 + 스탯 정보 세분화
+            //session.Player.MaxHp = 100;
             session.Player.Name = packet.nickname;
             Console.WriteLine($"{session.Player.Name}");
 
@@ -78,10 +78,10 @@ namespace Server
                     isHost = (hostSessionId == sessionId),
                     isSelf = (s == session),
                     playerId = s.SessionId,
-                    posX = s.Player.PosX,
-                    posY = s.Player.PosY,
-                    hp = s.Player.Hp,
-                    maxHp = s.Player.MaxHp
+                    //posX = s.Player.PosX,
+                    //posY = s.Player.PosY,
+                    //hp = s.Player.Hp,
+                    //maxHp = s.Player.MaxHp
                 });
             }
             session.Send(players.Write());
@@ -127,14 +127,14 @@ namespace Server
         public void Move(ClientSession session, C_Move packet)
         {
             // 플레이어 이동
-            session.Player.PosX = packet.posX;
-            session.Player.PosY = packet.posY;
+            //session.Player.PosX = packet.posX;
+            //session.Player.PosY = packet.posY;
 
             // 다른 플레이어에게 전달
             S_BroadcastMove move = new S_BroadcastMove();
             move.playerId = session.SessionId;
-            move.posX = session.Player.PosX;
-            move.posY = session.Player.PosY;
+            //move.posX = session.Player.PosX;
+            //move.posY = session.Player.PosY;
 
             Broadcast(move.Write());
         }
@@ -142,14 +142,14 @@ namespace Server
         public void SyncHp(ClientSession session, C_PlayerHp packet)
         {
             // 체력 동기화
-            session.Player.Hp = packet.hp;
-            session.Player.MaxHp = packet.maxHp;
+            //session.Player.Hp = packet.hp;
+            //session.Player.MaxHp = packet.maxHp;
 
             // 다른 플레이어에게 전달
             S_BroadcastPlayerHp hpPacket = new S_BroadcastPlayerHp();
             hpPacket.playerId = packet.playerId;
-            hpPacket.hp = session.Player.Hp;
-            hpPacket.maxHp = session.Player.MaxHp;
+            //hpPacket.hp = session.Player.Hp;
+            //hpPacket.maxHp = session.Player.MaxHp;
 
             Broadcast(hpPacket.Write());
         }

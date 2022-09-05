@@ -10,6 +10,8 @@ namespace Server
     {
         // !!! TEMP
         private static string _dbPath = @"d:\temp.db";
+        private static string _csvPath = @"d:\temp.csv";
+        private List<Dictionary<string, object>> _data;
         private int _maxInventorySize = 30;
         private int _maxEquipmentSize = 5;
 
@@ -86,6 +88,41 @@ namespace Server
         private void InitItemDB()
         {
             // Item.csv to DB
+            // string csvRawText = File.ReadAllText(_csvPath);
+            _data = CSVReader.Read(_csvPath);
+
+            using (SQLiteConnection connection = new SQLiteConnection($"Data Source={_dbPath};Version=3;"))
+            {
+                connection.Open();
+
+                foreach(Dictionary<string, object> item in _data)
+                {
+                    List<string> fields = new List<string>();
+                    List<string> datas = new List<string>();
+
+                    foreach (string key in item.Keys)
+                    {
+                        System.Console.WriteLine(key);
+                        System.Console.WriteLine(key == "");
+                        if (item[key] != "")
+                        {
+                            fields.Add(key);
+                            datas.Add(item[key]);   // !!! text 변환
+                        }
+                    }
+
+                    SQLiteCommand command = connection.CreateCommand();
+
+                    command.CommandText =
+                    @"
+                        INSERT INTO Inventories ($fields)
+                        VALUES ($datas)
+                    ";
+                    command.Parameters.AddWithValue("$fields", String.Join(',', fields));
+                    command.Parameters.AddWithValue("$datas", String.Join(',', datas));
+                    command.ExecuteNonQuery();
+                }
+            }
         }
 
         // -------------------------------------------------------------------------
